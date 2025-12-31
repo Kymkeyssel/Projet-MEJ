@@ -1,0 +1,339 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=Caveat:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Brand Colors - La MEJ */
+    --background: 45 33% 97%;
+    --foreground: 30 25% 20%;
+
+    --card: 45 30% 98%;
+    --card-foreground: 30 25% 20%;
+
+    --popover: 45 30% 98%;
+    --popover-foreground: 30 25% 20%;
+
+    /* Ocre / Jaune terre - Primary */
+    --primary: 42 71% 66%;
+    --primary-foreground: 30 30% 15%;
+
+    /* Turquoise doux - Secondary */
+    --secondary: 193 45% 67%;
+    --secondary-foreground: 200 40% 15%;
+
+    /* Brun naturel - Accent */
+    --accent: 33 35% 35%;
+    --accent-foreground: 45 30% 95%;
+
+    --muted: 45 20% 92%;
+    --muted-foreground: 30 15% 45%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 33 20% 85%;
+    --input: 33 20% 85%;
+    --ring: 42 71% 66%;
+
+    --radius: 1rem;
+
+    /* Extended palette */
+    --pastel-green: 96 32% 67%;
+    --soft-pink: 0 35% 75%;
+    --light-orange: 28 75% 66%;
+    --brown-dark: 33 35% 28%;
+    --turquoise-light: 193 50% 90%;
+    --ocre-light: 42 80% 92%;
+    --cream: 45 40% 96%;
+
+    /* Sidebar */
+    --sidebar-background: 45 30% 98%;
+    --sidebar-foreground: 30 25% 20%;
+    --sidebar-primary: 42 71% 66%;
+    --sidebar-primary-foreground: 30 30% 15%;
+    --sidebar-accent: 193 45% 67%;
+    --sidebar-accent-foreground: 200 40% 15%;
+    --sidebar-border: 33 20% 85%;
+    --sidebar-ring: 42 71% 66%;
+  }
+
+  .dark {
+    --background: 30 25% 10%;
+    --foreground: 45 30% 95%;
+
+    --card: 30 20% 14%;
+    --card-foreground: 45 30% 95%;
+
+    --popover: 30 20% 14%;
+    --popover-foreground: 45 30% 95%;
+
+    --primary: 42 71% 60%;
+    --primary-foreground: 30 30% 10%;
+
+    --secondary: 193 40% 50%;
+    --secondary-foreground: 200 40% 95%;
+
+    --accent: 33 35% 50%;
+    --accent-foreground: 45 30% 10%;
+
+    --muted: 30 15% 20%;
+    --muted-foreground: 45 20% 65%;
+
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 30 15% 25%;
+    --input: 30 15% 25%;
+    --ring: 42 71% 60%;
+
+    --sidebar-background: 30 20% 12%;
+    --sidebar-foreground: 45 30% 95%;
+    --sidebar-primary: 42 71% 60%;
+    --sidebar-primary-foreground: 30 30% 10%;
+    --sidebar-accent: 193 40% 50%;
+    --sidebar-accent-foreground: 200 40% 95%;
+    --sidebar-border: 30 15% 25%;
+    --sidebar-ring: 42 71% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-heading font-semibold tracking-tight;
+  }
+}
+
+@layer components {
+
+  /* Sketch-style decorative elements */
+  .sketch-underline {
+    @apply relative inline-block;
+  }
+
+  .sketch-underline::after {
+    content: '';
+    @apply absolute bottom-0 left-0 w-full h-1 bg-primary/40 rounded-full;
+    transform: rotate(-1deg);
+  }
+
+  /* Community circle card style */
+  .community-card {
+    @apply bg-card rounded-3xl p-6 shadow-soft border border-border/50 transition-all duration-300;
+  }
+
+  .community-card:hover {
+    @apply shadow-warm -translate-y-1;
+  }
+
+  /* Section styling */
+  .section-padding {
+    @apply py-16 md:py-20 px-4 md:px-8;
+  }
+
+  /* Warm button styles */
+  .btn-warm {
+    @apply bg-primary text-primary-foreground px-6 py-3 rounded-full font-medium transition-all duration-300 hover:shadow-warm hover:-translate-y-0.5;
+  }
+
+  .btn-outline-warm {
+    @apply border-2 border-primary text-accent px-6 py-3 rounded-full font-medium transition-all duration-300 hover:bg-primary hover:text-primary-foreground;
+  }
+
+  /* Decorative circles */
+  .decorative-circle {
+    @apply absolute rounded-full opacity-20;
+  }
+
+  /* Text accent (handwritten feel) */
+  .text-handwritten {
+    @apply font-accent;
+  }
+
+  /* Partner logo container */
+  .partner-band {
+    @apply bg-cream py-8 overflow-hidden;
+  }
+
+  /* Governance tree lines */
+  .org-line {
+    @apply bg-accent/30;
+  }
+}
+
+@layer utilities {
+
+  /* Animation classes */
+  .animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out forwards;
+  }
+
+  .animate-fade-in-down {
+    animation: fadeInDown 0.6s ease-out forwards;
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.5s ease-out forwards;
+  }
+
+  .animate-slide-in-left {
+    animation: slideInLeft 0.6s ease-out forwards;
+  }
+
+  .animate-slide-in-right {
+    animation: slideInRight 0.6s ease-out forwards;
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-pulse-soft {
+    animation: pulseSoft 3s ease-in-out infinite;
+  }
+
+  /* Stagger delays */
+  .delay-100 {
+    animation-delay: 100ms;
+  }
+
+  .delay-200 {
+    animation-delay: 200ms;
+  }
+
+  .delay-300 {
+    animation-delay: 300ms;
+  }
+
+  .delay-400 {
+    animation-delay: 400ms;
+  }
+
+  .delay-500 {
+    animation-delay: 500ms;
+  }
+}
+
+/* Keyframes */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes pulseSoft {
+
+  0%,
+  100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-muted;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-primary/50 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-primary/70;
+}
