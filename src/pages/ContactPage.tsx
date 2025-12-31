@@ -1,33 +1,74 @@
 import { motion } from "framer-motion";
-import { MapPin, Phone, Mail, Clock, Send } from "lucide-react";
+import {
+  MapPin,
+  Phone,
+  Mail,
+  Clock,
+  Send,
+  User,
+  MessageSquare,
+} from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
-import SectionTitle from "@/components/SectionTitle";
 import heroImage from "@/assets/hero-community.jpg";
 
 const ContactPage = () => {
   const { toast } = useToast();
   const [formData, setFormData] = useState({
     name: "",
-    email: "",
+    contact: "",
     subject: "",
     message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [contactMethod, setContactMethod] = useState("email");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    // Logique WhatsApp
+    if (contactMethod === "whatsapp") {
+      const { name, contact, subject, message } = formData;
+
+      const whatsappMessage = `
+*Nouveau message LAMEJ*  
+──────────────
+*Nom:* ${name}  
+*Contact:* ${contact}  
+*Sujet:* ${subject}  
+
+*Message:*  
+${message}  
+──────────────
+Envoyé depuis le site LAMEJ
+      `;
+
+      window.open(
+        `https://wa.me/237656171442?text=${encodeURIComponent(
+          whatsappMessage
+        )}`,
+        "_blank"
+      );
+
+      setIsSubmitting(false);
+      toast({
+        title: "Message WhatsApp prêt !",
+        description: "Ouvrez WhatsApp pour envoyer votre message.",
+      });
+      setFormData({ name: "", contact: "", subject: "", message: "" });
+      return;
+    }
+
+    // // Simule l'envoi email
+    // await new Promise((resolve) => setTimeout(resolve, 1500));
 
     toast({
       title: "Message envoyé !",
       description: "Nous vous répondrons dans les plus brefs délais.",
     });
 
-    setFormData({ name: "", email: "", subject: "", message: "" });
+    setFormData({ name: "", contact: "", subject: "", message: "" });
     setIsSubmitting(false);
   };
 
@@ -37,6 +78,11 @@ const ContactPage = () => {
     >
   ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  // Pour le champ contact (email ou whatsapp)
+  const handleContactChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, contact: e.target.value });
   };
 
   return (
@@ -70,7 +116,7 @@ const ContactPage = () => {
       <section className="py-6 sm:py-12 md:py-16 lg:section-padding bg-background">
         <div className="container mx-auto px-3 sm:px-6 md:px-8">
           <div className="grid sm:grid-cols-2 lg:grid-cols-2 gap-12 sm:gap-10 md:gap-12">
-            {/* Contact Info - 2 colonnes sur mobile */}
+            {/* Contact Info */}
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -108,9 +154,9 @@ const ContactPage = () => {
                       </h4>
                     </div>
                     <p className="text-muted-foreground text-[10px] sm:text-sm leading-tight sm:leading-normal">
-                      Quartier Communautaire, BP 123
+                      Yaoundé, Région du Centre
                       <br />
-                      Ville, Pays
+                      Cameroun
                     </p>
                   </div>
                 </motion.div>
@@ -142,9 +188,7 @@ const ContactPage = () => {
                       </h4>
                     </div>
                     <p className="text-muted-foreground text-[10px] sm:text-sm leading-tight sm:leading-normal">
-                      +XX XXX XXX XXX
-                      <br />
-                      +XX XXX XXX XXX
+                      +237 6 76 97 80 90
                     </p>
                   </div>
                 </motion.div>
@@ -208,9 +252,26 @@ const ContactPage = () => {
                   </div>
                 </motion.div>
               </div>
+
+              {/* Déclaration Légale */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.5 }}
+                viewport={{ once: true }}
+                className="mt-6 sm:mt-8 bg-primary text-primary-foreground p-4 sm:p-6 rounded-xl"
+              >
+                <h3 className="font-heading font-bold text-sm sm:text-xl mb-2 sm:mb-3">
+                  Déclaration Légale
+                </h3>
+                <p className="text-primary-foreground/90 text-[10px] sm:text-sm leading-tight sm:leading-relaxed">
+                  Association à but non lucratif créée sous la Déclaration
+                  Déclaration N°80/RDA/F.34/BAPP du 22 Décembre 2008.
+                </p>
+              </motion.div>
             </motion.div>
 
-            {/* Contact Form - Optimisé mobile */}
+            {/* Contact Form */}
             <motion.div
               initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -233,34 +294,69 @@ const ContactPage = () => {
                     >
                       Nom Complet *
                     </label>
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      required
-                      className="w-full px-3 sm:px-4 py-2 rounded-lg sm:rounded-xl bg-background border border-border focus:border-primary focus:ring-1 sm:focus:ring-2 focus:ring-primary/20 outline-none transition-all duration-300 text-sm sm:text-base"
-                      placeholder="Votre nom"
-                    />
+                    <div className="relative">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <User className="h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground" />
+                      </div>
+                      <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        required
+                        className="w-full pl-9 sm:pl-10 pr-3 sm:pr-4 py-2 rounded-lg sm:rounded-xl bg-background border border-border focus:border-primary focus:ring-1 sm:focus:ring-2 focus:ring-primary/20 outline-none transition-all duration-300 text-sm sm:text-base"
+                        placeholder="Votre nom"
+                      />
+                    </div>
                   </div>
 
                   <div>
-                    <label
-                      htmlFor="email"
-                      className="block text-xs sm:text-sm font-medium text-foreground mb-1"
-                    >
-                      Email *
-                    </label>
+                    <div className="flex items-center justify-between mb-1">
+                      <label
+                        htmlFor="contact"
+                        className="block text-xs sm:text-sm font-medium text-foreground"
+                      >
+                        {contactMethod === "email" ? "Email" : "WhatsApp"} *
+                      </label>
+                      <div className="flex items-center gap-1 sm:gap-2 bg-card p-0.5 sm:p-1 rounded-full">
+                        {/* <button
+                          type="button"
+                          onClick={() => setContactMethod("email")}
+                          className={`px-2 sm:px-3 py-1 text-[10px] sm:text-sm rounded-full transition-all ${
+                            contactMethod === "email"
+                              ? "bg-background shadow text-primary"
+                              : "text-muted-foreground hover:text-primary"
+                          }`}
+                        >
+                          Email
+                        </button> */}
+                        <button
+                          type="button"
+                          onClick={() => setContactMethod("whatsapp")}
+                          className={`px-2 sm:px-3 py-1 text-[10px] sm:text-sm rounded-full transition-all ${
+                            contactMethod === "whatsapp"
+                              ? "bg-background shadow text-accent"
+                              : "text-muted-foreground hover:text-primary"
+                          }`}
+                        >
+                          WhatsApp
+                        </button>
+                      </div>
+                    </div>
                     <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
+                      type={contactMethod === "email" ? "email" : "tel"}
+                      id="contact"
+                      name="contact"
+                      value={formData.contact}
+                      onChange={handleContactChange}
                       required
-                      className="w-full px-3 sm:px-4 py-2 rounded-lg sm:rounded-xl bg-background border border-border focus:border-primary focus:ring-1 sm:focus:ring-2 focus:ring-primary/20 outline-none transition-all duration-300 text-sm sm:text-base"
-                      placeholder="votre@email.com"
+                      className="mt-1 block w-full px-3 sm:px-4 py-2 rounded-lg sm:rounded-xl bg-background border border-border focus:border-primary focus:ring-1 sm:focus:ring-2 focus:ring-primary/20 outline-none transition-all duration-300 text-sm sm:text-base"
+                      placeholder={
+                        contactMethod === "email"
+                          ? "votre@email.com"
+                          : "Votre numéro WhatsApp (ex: +237 XXX XXX XXX)"
+                      }
                     />
                   </div>
 
@@ -271,22 +367,27 @@ const ContactPage = () => {
                     >
                       Sujet *
                     </label>
-                    <select
-                      id="subject"
-                      name="subject"
-                      value={formData.subject}
-                      onChange={handleChange}
-                      required
-                      className="w-full px-3 sm:px-4 py-2 rounded-lg sm:rounded-xl bg-background border border-border focus:border-primary focus:ring-1 sm:focus:ring-2 focus:ring-primary/20 outline-none transition-all duration-300 text-sm sm:text-base appearance-none"
-                    >
-                      <option value="">Sélectionnez un sujet</option>
-                      <option value="general">Renseignement général</option>
-                      <option value="membership">Devenir membre</option>
-                      <option value="partnership">Partenariat</option>
-                      <option value="donation">Don / Soutien</option>
-                      <option value="volunteer">Bénévolat</option>
-                      <option value="other">Autre</option>
-                    </select>
+                    <div className="relative">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <MessageSquare className="h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground" />
+                      </div>
+                      <select
+                        id="subject"
+                        name="subject"
+                        value={formData.subject}
+                        onChange={handleChange}
+                        required
+                        className="w-full pl-9 sm:pl-10 pr-3 sm:pr-4 py-2 rounded-lg sm:rounded-xl bg-background border border-border focus:border-primary focus:ring-1 sm:focus:ring-2 focus:ring-primary/20 outline-none transition-all duration-300 text-sm sm:text-base appearance-none"
+                      >
+                        <option value="">Sélectionnez un sujet</option>
+                        <option value="general">Renseignement général</option>
+                        <option value="membership">Devenir membre</option>
+                        <option value="partnership">Partenariat</option>
+                        <option value="donation">Don / Soutien</option>
+                        <option value="volunteer">Bénévolat</option>
+                        <option value="other">Autre</option>
+                      </select>
+                    </div>
                   </div>
 
                   <div>
@@ -332,6 +433,56 @@ const ContactPage = () => {
                 </form>
               </div>
             </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Section Opportunités de Collaboration */}
+      <section className="py-6 sm:py-12 md:py-16 bg-card">
+        <div className="container mx-auto px-3 sm:px-6 md:px-8">
+          <div className="text-center mb-6 sm:mb-12">
+            <h2 className="font-heading font-bold text-xl sm:text-3xl md:text-4xl text-foreground mb-2 sm:mb-4">
+              Opportunités de Collaboration
+            </h2>
+            <div className="w-12 sm:w-24 h-0.5 sm:h-1 bg-primary mx-auto mb-3 sm:mb-6"></div>
+            <p className="text-muted-foreground text-xs sm:text-base md:text-lg max-w-3xl mx-auto">
+              Nous sommes ouverts à diverses formes de collaboration pour
+              amplifier notre impact.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
+            <div className="bg-background p-4 sm:p-6 md:p-8 rounded-xl shadow-sm border border-border">
+              <h3 className="font-heading font-bold text-base sm:text-xl text-foreground mb-2 sm:mb-4">
+                Partenariats
+              </h3>
+              <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed">
+                Collaborations institutionnelles, académiques et avec les
+                organisations internationales pour des projets de recherche et
+                développement.
+              </p>
+            </div>
+
+            <div className="bg-background p-4 sm:p-6 md:p-8 rounded-xl shadow-sm border border-border">
+              <h3 className="font-heading font-bold text-base sm:text-xl text-foreground mb-2 sm:mb-4">
+                Projets Communautaires
+              </h3>
+              <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed">
+                Initiatives locales d'accompagnement et de formation des
+                communautés sur la gestion durable de leurs ressources.
+              </p>
+            </div>
+
+            <div className="bg-background p-4 sm:p-6 md:p-8 rounded-xl shadow-sm border border-border">
+              <h3 className="font-heading font-bold text-base sm:text-xl text-foreground mb-2 sm:mb-4">
+                Consultance
+              </h3>
+              <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed">
+                Services d'expertise pour les études environnementales,
+                l'évaluation d'impacts et le développement de stratégies
+                durables.
+              </p>
+            </div>
           </div>
         </div>
       </section>

@@ -568,7 +568,7 @@ const HomePage = () => {
               </blockquote>
               <div className="pt-4">
                 <p className="font-heading font-semibold text-lg text-accent">
-                  Mme. La Présidente
+                  Mme YMELE NOUAZI Berte FLorence
                 </p>
                 <p className="text-muted-foreground">Fondatrice de La MEJ</p>
               </div>
