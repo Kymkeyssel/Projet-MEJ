@@ -662,9 +662,7 @@ const HomePage = () => {
                 nombreuses, de soutien aux femmes et filles victimes de
                 violences basées sur le genre et vers leur autonomisation,
                 d’implication dans la lutte contre les changements climatiques
-                pour une santé globale. Ymele Nouazi Berthe Florence Assistante
-                Principale des Affaires Sociales Experte consultante en
-                Développement Genre et droits humains en santé. "
+                pour une santé globale."
               </blockquote>
             </motion.div>
           </div>
