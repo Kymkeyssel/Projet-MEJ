@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import SectionTitle from "@/components/SectionTitle";
 import heroImage from "@/assets/hero-community.jpg";
-import projectDevelopment from "@/assets/project-development.jpg";
-import projectHealth from "@/assets/project-health.jpg";
+import Axe2 from "../assets/AxeStrategique_2.jpeg";
+import Axe3 from "../assets/AxeStrategique_3.jpeg";
 import projectAid from "@/assets/project-aid.jpg";
-import projectEducation from "@/assets/project-education.jpg";
+import Axe1 from "../assets/AxeStrategique_1.jpeg";
 import {
   FileText,
   Heart,
@@ -37,7 +37,7 @@ const strategicAxes = [
     shortDescription: "Facilitation de la prévention de plusieurs maladies ",
     fullDescription:
       "Facilitation de la prévention de plusieurs maladies notamment le VIH/sida et autres IST, l’éducation à la santé sexuelle et reproductive, paludisme, tuberculose, maladies métaboliques, le renforcement des capacités des acteurs, la facilitation de l’accès aux soins à nos cibles.",
-    image: projectEducation,
+    image: Axe1,
     color: "bg-secondary/20",
     iconColor: "text-secondary-foreground",
     expandDirection: "right",
@@ -48,7 +48,7 @@ const strategicAxes = [
     shortDescription: "Accompagnement des jeunes filles, parfois filles-mères ",
     fullDescription:
       "Accompagnement des jeunes filles, parfois filles-mères à mieux reprendre l’estime et le contrôle de soi. Encadrement des femmes parfois seules ou veuves dans le développement des AGR et sur la responsabilité parentale en matière d’éducation des filles et des garçons dans un contexte socioculturel très conservateur. ",
-    image: projectDevelopment,
+    image: Axe2,
     color: "bg-primary/20",
     iconColor: "text-primary-foreground",
     expandDirection: "left",
@@ -59,7 +59,7 @@ const strategicAxes = [
     shortDescription: "Appuis directs aux bénéficiaires ",
     fullDescription:
       "Appuis directs aux bénéficiaires : scolarité et fournitures scolaires, aide aux soins, appuis vestimentaires, appuis nutritionnels, médiations familiales, écoute, référence et accompagnement, suivi à domicile. Résolution des besoins spécifiques des jeunes filles en ce qui concerne leur hygiène sexuelle, conseils pratiques, écoute, orientation, accompagnement, octroi des aides diverses aux jeunes filles mères.",
-    image: projectHealth,
+    image: Axe3,
     color: "bg-pastel-pink/30",
     iconColor: "text-foreground",
     expandDirection: "right",
@@ -278,13 +278,13 @@ const AxisModal = ({
             className="relative w-full max-w-lg sm:max-w-2xl bg-white rounded-t-2xl sm:rounded-2xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden"
           >
             {/* En-tête avec image en fond */}
-            <div className="relative h-32 sm:h-40">
+            <div className="relative h-60 sm:h-40">
               <img
                 src={axis.image}
                 alt={axis.title}
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/40 to-transparent" />
 
               {/* Bouton fermer */}
               <button
@@ -399,7 +399,7 @@ const AxesStrategiquesPage = () => {
 
       {/* Strategic Axes - Version Desktop (inchangée) */}
       <section className="hidden lg:block section-padding bg-gradient-to-br from-ocre-light via-background to-turquoise-light">
-        <div className="container mx-auto px-4 md:px-8">
+        <div className="container mx-auto px-2 md:px-8">
           <div className="grid md:grid-cols-2 gap-8">
             {strategicAxes.map((axis, index) => (
               <StrategicAxisCard key={axis.title} axis={axis} index={index} />

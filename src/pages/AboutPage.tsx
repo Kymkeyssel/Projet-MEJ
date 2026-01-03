@@ -268,7 +268,7 @@ const AboutPage = () => {
               </h3>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-5 sm:gap-8">
+            <div className="grid grid-cols-2 sm:grid-cols-2 gap-5 sm:gap-8">
               {objectives.map((objective, index) => (
                 <motion.div
                   key={index}
@@ -276,13 +276,13 @@ const AboutPage = () => {
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.3, delay: index * 0.08 }}
                   viewport={{ once: true }}
-                  className="flex items-start gap-2.5 sm:gap-3 p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-card/50 border border-border/50"
+                  className="flex items-start gap-2.5 sm:gap-3 p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-primary/30 border border-border/50"
                 >
                   <CheckCircle
                     size={16}
-                    className="sm:w-5 sm:h-5 text-primary flex-shrink-0 mt-0.5"
+                    className="sm:w-5 sm:h-5 text-secondary flex-shrink-0 mt-0.5"
                   />
-                  <span className="text-xs sm:text-sm text-foreground/90 leading-relaxed">
+                  <span className="text-xs font-bold sm:text-xl text-accent leading-relaxed">
                     {objective}
                   </span>
                 </motion.div>

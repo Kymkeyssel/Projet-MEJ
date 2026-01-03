@@ -23,18 +23,17 @@ import {
 import SectionTitle from "@/components/SectionTitle";
 
 // Import images
-import heroImage from "@/assets/hero-community.jpg";
+import heroImage from "../assets/WhatsApp Image 2026-01-03 at 17.20.44.jpeg";
 import projectDev from "@/assets/project-development.jpg";
 import projectHealth from "@/assets/project-health.jpg";
 import projectEducation from "@/assets/project-education.jpg";
 import projectAid from "@/assets/project-aid.jpg";
-import presidentPortrait from "@/assets/president-portrait.jpg";
+import presidentPortrait from "../assets/president-portrait.jpeg";
 
 const stats = [
   { number: "15+", label: "Années d'Expérience" },
   { number: "50+", label: "Projets Réalisés" },
   { number: "10K+", label: "Bénéficiaires" },
-  { number: "25+", label: "Partenaires" },
 ];
 
 const values = [
@@ -337,7 +336,7 @@ const HomePage = () => {
             alt="Communauté La MEJ"
             className="w-full h-full object-cover object-center"
           />
-          <div className="absolute inset-0 bg-black/30" />
+          {/* <div className="absolute inset-0 bg-black/30" /> */}
           <div className="absolute inset-0 bg-gradient-to-r from-accent/70 via-accent/40 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
         </div>
@@ -379,17 +378,21 @@ const HomePage = () => {
                 transition={{ duration: 0.6, delay: 0.3 }}
                 className="font-heading font-bold text-2xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl text-accent-foreground leading-tight sm:leading-tight"
               >
-                La Maison de Enfants et des Jeunes. . .
-                <span className="text-primary relative">
-                  C'est donner un peu de nous. . .
-                  <motion.span
-                    initial={{ width: 0 }}
-                    animate={{ width: "100%" }}
-                    transition={{ delay: 0.8, duration: 0.5 }}
-                    className="absolute bottom-1 sm:bottom-1.5 left-0 h-0.5 sm:h-1 bg-primary/50 rounded-full"
-                  />
-                </span>
-                pour les autres.
+                <div className="font-heading font-bold text-2xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl text-accent-foreground leading-tight sm:leading-tight">
+                  La Maison de Enfants et des Jeunes.
+                </div>
+                <div className=" text-xl sm:text-lg md:text-lg lg:text-xl xl:text-xl text-primary leading-tight sm:leading-tight">
+                  <span className=" mr-2 text-primary relative">
+                    C'est donner un peu de nous
+                    {/* <motion.span
+                      initial={{ width: 0 }}
+                      animate={{ width: "100%" }}
+                      transition={{ delay: 0.8, duration: 0.5 }}
+                      className=" absolute bottom-1 sm:bottom-1.5 left-0 h-0.5 sm:h-1 bg-primary/50 rounded-full"
+                    /> */}
+                  </span>
+                  pour les autres.
+                </div>
               </motion.h1>
 
               <motion.p
@@ -501,7 +504,7 @@ const HomePage = () => {
       {/* Stats Section */}
       <section className="py-5 bg-primary/10">
         <div className="container mx-auto px-4 md:px-8">
-          <div className="grid grid-cols-4 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8 ">
+          <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8 ">
             {stats.map((stat, index) => (
               <motion.div
                 key={stat.label}
@@ -536,7 +539,7 @@ const HomePage = () => {
           />
 
           {/* Version Desktop - Layout original */}
-          <div className="hidden lg:grid lg:grid-cols-2 gap-12 items-center max-w-5xl mx-auto">
+          <div className="hidden lg:grid lg:grid-cols-2 gap-12 items-center max-w-full mx-auto">
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -562,15 +565,37 @@ const HomePage = () => {
               viewport={{ once: true }}
               className="space-y-6"
             >
-              <blockquote className="text-2xl md:text-3xl text-foreground/90 leading-relaxed italic font-accent text-2xl">
-                "La MEJ , c'est une histoire et une identité. C'est une pensée
-                qui s'est matérialiée"
+              <blockquote className="text-xl md:text-2xl text-foreground/90 leading-relaxed italic font-accent text-xl">
+                " La MEJ, c’est une histoire et une identité, une histoire qui
+                continue de se forger depuis plus de 15 ans en s’appuyant sur de
+                nombreuses personnes qui ont très vite compris que le
+                développement passe par l’éducation précoce et la prévention en
+                santé avec une vision selon laquelle il est possible de
+                construire une société où les enfants et jeunes vivent en bonne
+                santé et jouissent du bien-être global, sans distinction
+                aucune.. Avec une vision très ambitieuse, nous avions toujours
+                ce goût de l’inachevé, mais des ressources intangibles autour de
+                nous, et de nombreux partenaires, nous ont donné l’envie et la
+                force de continuer notre mission sociale. Acteurs et actrices
+                communautaires, nos membres se sont inscrits dans une
+                perspective globale de développement. L’équipe de la MEJ, malgré
+                les ressources limitées garde le cap, restant consciente des
+                enjeux de santé préventive et communautaire, d’écoute et
+                d’accompagnement de nos cibles nécessiteuses de plus en plus
+                nombreuses, de soutien aux femmes et filles victimes de
+                violences basées sur le genre et vers leur autonomisation,
+                d’implication dans la lutte contre les changements climatiques
+                pour une santé globale. "
               </blockquote>
               <div className="pt-4">
-                <p className="font-heading font-semibold text-lg text-accent">
+                <p className="font-heading italic font-semibold text-lg text-accent">
                   Mme YMELE NOUAZI Berte FLorence
                 </p>
-                <p className="text-muted-foreground">Fondatrice de La MEJ</p>
+                <p className="text-muted-foreground ">Presidente MEJ</p>
+                <p className="text-muted-foreground font-thin text-sm mt-2">
+                  Assistante Principale des Affaires Sociales Experte
+                  consultante en Développement Genre et droits humains en santé.
+                </p>
               </div>
             </motion.div>
           </div>
@@ -588,7 +613,7 @@ const HomePage = () => {
               <div className="flex items-start gap-4 mb-6">
                 {/* Photo cube */}
                 <div className="relative shrink-0">
-                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden shadow-md ring-2 ring-primary/30">
+                  <div className="w-18 h-24 sm:w-20 sm:h-20 rounded-xl overflow-hidden shadow-md ring-2 ring-primary/30">
                     <img
                       src={presidentPortrait}
                       alt="Président de La MEJ"
@@ -597,29 +622,49 @@ const HomePage = () => {
                   </div>
                   {/* Badge décoratif */}
                   <div className="absolute -bottom-1 -right-1 bg-primary text-white text-xs font-bold px-1.5 py-0.5 rounded-full">
-                    PDG
+                    Presi
                   </div>
                 </div>
 
                 {/* Titre et infos */}
                 <div className="flex-1">
                   <h3 className="text-xl sm:text-2xl font-bold text-foreground">
-                    Mot du Président
+                    Mot de la Présidente
                   </h3>
                   <p className="text-sm sm:text-base text-muted-foreground mt-1">
-                    M. Le Président • Fondateur de La MEJ
+                    Mme Ymele Nouazi Berthe Florence • Presidente MEJ
                   </p>
                   <div className="flex items-center gap-2 mt-2 text-xs sm:text-sm text-muted-foreground">
                     <Calendar size={12} className="text-primary" />
-                    <span>Depuis 2005</span>
+                    <span>Depuis 2008</span>
                   </div>
                 </div>
               </div>
 
               {/* Message avec même style que desktop */}
               <blockquote className="text-2xl md:text-3xl text-foreground/90 leading-relaxed italic font-accent text-2xl">
-                "La MEJ , c'est une histoire et une identité. C'est une pensée
-                qui s'est matérialiée"
+                " La MEJ, c’est une histoire et une identité, une histoire qui
+                continue de se forger depuis plus de 15 ans en s’appuyant sur de
+                nombreuses personnes qui ont très vite compris que le
+                développement passe par l’éducation précoce et la prévention en
+                santé avec une vision selon laquelle il est possible de
+                construire une société où les enfants et jeunes vivent en bonne
+                santé et jouissent du bien-être global, sans distinction
+                aucune.. Avec une vision très ambitieuse, nous avions toujours
+                ce goût de l’inachevé, mais des ressources intangibles autour de
+                nous, et de nombreux partenaires, nous ont donné l’envie et la
+                force de continuer notre mission sociale. Acteurs et actrices
+                communautaires, nos membres se sont inscrits dans une
+                perspective globale de développement. L’équipe de la MEJ, malgré
+                les ressources limitées garde le cap, restant consciente des
+                enjeux de santé préventive et communautaire, d’écoute et
+                d’accompagnement de nos cibles nécessiteuses de plus en plus
+                nombreuses, de soutien aux femmes et filles victimes de
+                violences basées sur le genre et vers leur autonomisation,
+                d’implication dans la lutte contre les changements climatiques
+                pour une santé globale. Ymele Nouazi Berthe Florence Assistante
+                Principale des Affaires Sociales Experte consultante en
+                Développement Genre et droits humains en santé. "
               </blockquote>
             </motion.div>
           </div>
