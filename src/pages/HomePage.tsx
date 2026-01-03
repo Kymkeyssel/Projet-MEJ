@@ -613,7 +613,7 @@ const HomePage = () => {
               <div className="flex items-start gap-4 mb-6">
                 {/* Photo cube */}
                 <div className="relative shrink-0">
-                  <div className="w-18 h-24 sm:w-20 sm:h-20 rounded-xl overflow-hidden shadow-md ring-2 ring-primary/30">
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden shadow-md ring-2 ring-primary/30">
                     <img
                       src={presidentPortrait}
                       alt="Président de La MEJ"
