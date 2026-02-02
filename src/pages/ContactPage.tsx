@@ -69,8 +69,8 @@ Envoyé depuis le site LAMEJ
     // =========================
     try {
       await emailjs.send(
-        import.meta.env.VITE_EMAILJS_SERVICE_ID,
-        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        "service_oqw4f2y",
+        "template_i2ke7ol",
         {
           formData: {
             name,
@@ -80,7 +80,7 @@ Envoyé depuis le site LAMEJ
           },
           subject,
         },
-        import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
+        "azY2-lnYLqnhSFQVl",
       );
 
       toast({
