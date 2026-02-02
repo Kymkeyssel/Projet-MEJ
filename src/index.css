@@ -4,6 +4,26 @@
 @tailwind components;
 @tailwind utilities;
 
+
+
+
+
+/* ==========================================================================
+   INDEX.CSS - MEJ CAMEROUN
+   ========================================================================== */
+
+/* Importation des polices */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=Caveat:wght@400;500;600;700&display=swap');
+
+/* Importation de Tailwind CSS */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==========================================================================
+   VARIABLES DE COULEURS - Palette MEJ
+   ========================================================================== */
+
 @layer base {
   :root {
     /* Brand Colors - La MEJ */

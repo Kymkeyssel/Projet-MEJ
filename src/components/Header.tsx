@@ -86,8 +86,8 @@ const Header = ({ onPhotothequeOpen }: HeaderProps) => {
                       ? "bg-secondary text-white px-4 py-2 rounded-full font-semibold shadow-lg hover:bg-pastel-green" // Style spécial pour Contact
                       : "bg-primary text-accent border-b-2 border-secondary font-semibold" // Style pour Accueil et autres items actifs
                     : link.label === "contact"
-                    ? "bg-secondary/80 text-white px-4 py-2 rounded-full font-semibold shadow-lg hover:bg-pastel-green" // Style Contact inactif
-                    : "text-white hover:text-secondary border-b-2 border-primary" // Style normal pour autres items
+                      ? "bg-secondary/80 text-white px-4 py-2 rounded-full font-semibold shadow-lg hover:bg-pastel-green" // Style Contact inactif
+                      : "text-white hover:text-secondary border-b-2 border-primary" // Style normal pour autres items
                 } ${link.label === "contact" ? "mx-2" : ""}`} // Marge pour le bouton Contact
               >
                 {link.label}
