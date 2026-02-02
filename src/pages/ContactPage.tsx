@@ -1,4 +1,6 @@
 import { motion } from "framer-motion";
+import emailjs from "@emailjs/browser";
+
 import {
   MapPin,
   Phone,
@@ -27,28 +29,30 @@ const ContactPage = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Logique WhatsApp
+    const { name, contact, subject, message } = formData;
+
+    // =========================
+    // CAS WHATSAPP (INCHANGÉ)
+    // =========================
     if (contactMethod === "whatsapp") {
-      const { name, contact, subject, message } = formData;
-
       const whatsappMessage = `
-*Nouveau message LAMEJ*  
+*Nouveau message LAMEJ*
 ──────────────
-*Nom:* ${name}  
-*Contact:* ${contact}  
-*Sujet:* ${subject}  
+*Nom:* ${name}
+*Contact:* ${contact}
+*Sujet:* ${subject}
 
-*Message:*  
-${message}  
+*Message:*
+${message}
 ──────────────
 Envoyé depuis le site LAMEJ
-      `;
+    `;
 
       window.open(
-        `https://wa.me/237656171442?text=${encodeURIComponent(
-          whatsappMessage
+        `https://wa.me/+237673219476?text=${encodeURIComponent(
+          whatsappMessage,
         )}`,
-        "_blank"
+        "_blank",
       );
 
       setIsSubmitting(false);
@@ -60,22 +64,48 @@ Envoyé depuis le site LAMEJ
       return;
     }
 
-    // // Simule l'envoi email
-    // await new Promise((resolve) => setTimeout(resolve, 1500));
+    // =========================
+    // CAS EMAIL (EMAILJS)
+    // =========================
+    try {
+      await emailjs.send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        {
+          formData: {
+            name,
+            contact,
+            subject,
+            message,
+          },
+          subject,
+        },
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
+      );
 
-    toast({
-      title: "Message envoyé !",
-      description: "Nous vous répondrons dans les plus brefs délais.",
-    });
+      toast({
+        title: "Message envoyé !",
+        description: "Nous vous répondrons dans les plus brefs délais.",
+      });
 
-    setFormData({ name: "", contact: "", subject: "", message: "" });
-    setIsSubmitting(false);
+      setFormData({ name: "", contact: "", subject: "", message: "" });
+    } catch (error) {
+      console.error("EmailJS error:", error);
+      toast({
+        title: "Erreur",
+        description:
+          "Une erreur est survenue lors de l'envoi. Veuillez réessayer.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
+    >,
   ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -154,7 +184,7 @@ Envoyé depuis le site LAMEJ
                       </h4>
                     </div>
                     <p className="text-muted-foreground text-[10px] sm:text-sm leading-tight sm:leading-normal">
-                      Yaoundé, Région du Centre
+                      Bafou-Dschang, Région de l'Ouest
                       <br />
                       Cameroun
                     </p>
@@ -188,7 +218,7 @@ Envoyé depuis le site LAMEJ
                       </h4>
                     </div>
                     <p className="text-muted-foreground text-[10px] sm:text-sm leading-tight sm:leading-normal">
-                      +237 6 76 97 80 90
+                      +237 6 73 21 94 76
                     </p>
                   </div>
                 </motion.div>
@@ -214,9 +244,7 @@ Envoyé depuis le site LAMEJ
                       </h4>
                     </div>
                     <p className="text-muted-foreground text-[10px] sm:text-sm leading-tight sm:leading-normal">
-                      contact@lamej.org
-                      <br />
-                      info@lamej.org
+                      lamaisonej@yahoo.fr
                     </p>
                   </div>
                 </motion.div>
@@ -245,9 +273,7 @@ Envoyé depuis le site LAMEJ
                       </h4>
                     </div>
                     <p className="text-muted-foreground text-[10px] sm:text-sm leading-tight sm:leading-normal">
-                      Lundi - Vendredi: 8h00 - 17h00
-                      <br />
-                      Samedi: 9h00 - 13h00
+                      Mercredi & Dimanche: 8h00 - 15h00
                     </p>
                   </div>
                 </motion.div>
@@ -320,7 +346,7 @@ Envoyé depuis le site LAMEJ
                         {contactMethod === "email" ? "Email" : "WhatsApp"} *
                       </label>
                       <div className="flex items-center gap-1 sm:gap-2 bg-card p-0.5 sm:p-1 rounded-full">
-                        {/* <button
+                        <button
                           type="button"
                           onClick={() => setContactMethod("email")}
                           className={`px-2 sm:px-3 py-1 text-[10px] sm:text-sm rounded-full transition-all ${
@@ -330,7 +356,7 @@ Envoyé depuis le site LAMEJ
                           }`}
                         >
                           Email
-                        </button> */}
+                        </button>
                         <button
                           type="button"
                           onClick={() => setContactMethod("whatsapp")}

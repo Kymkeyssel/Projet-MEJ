@@ -224,7 +224,7 @@ const positions: Position[] = [
 
 const GovernancePage = () => {
   const [selectedPosition, setSelectedPosition] = useState<Position | null>(
-    null
+    null,
   );
 
   return (
@@ -308,7 +308,7 @@ const GovernancePage = () => {
 
               {/* ligne verticale vers niveaux inférieurs */}
               <div className="flex justify-center gap-10">
-                <div className="w-1 h-8 bg-border" />
+                <div className="w-1 h-14 bg-gradient-to-b from-primary to-border" />
               </div>
             </motion.div>
 
@@ -321,9 +321,9 @@ const GovernancePage = () => {
               className="flex flex-col items-center mb-16"
             >
               {/* Container pour Présidente et Conseiller */}
-              <div className="flex items-start justify-center mb-8 gap-8">
+              <div className="flex items-start justify-center mb-4 gap-8">
                 {/* Présidente */}
-                <div className="flex flex-col items-center">
+                <div className="flex flex-col items-center mt-4 ml-40">
                   <motion.div
                     onClick={() => setSelectedPosition(positions[2])}
                     className="px-8 py-4 bg-gradient-to-r from-accent/90 to-accent text-accent-foreground rounded-2xl font-heading font-bold text-lg cursor-pointer hover:shadow-lg hover:-translate-y-1 transition-all duration-300 text-center mb-4"
@@ -336,14 +336,14 @@ const GovernancePage = () => {
 
                   {/* Ligne verticale vers Vice-Présidente */}
                   <div className="flex justify-center">
-                    <div className="w-0.5 h-8 bg-border" />
+                    <div className="w-1 h-10 bg-border" />
                   </div>
                 </div>
 
                 {/* Conseiller à droite de la Présidente */}
-                <div className="relative mt-8">
+                <div className="relative mt-2">
                   {/* Ligne horizontale vers Conseiller */}
-                  <div className="absolute -left-8 top-1/2 w-8 h-0.5 bg-border" />
+                  <div className="absolute -left-8 top-1/2 w-8 h-1 bg-border" />
 
                   <motion.div
                     onClick={() => setSelectedPosition(positions[3])}
@@ -363,12 +363,12 @@ const GovernancePage = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.3 }}
                 viewport={{ once: true }}
-                className="flex flex-col items-center mb-8"
+                className="flex flex-col items-center"
               >
                 {/* Vice-Présidente */}
                 <motion.div
                   onClick={() => setSelectedPosition(positions[4])}
-                  className="px-8 py-4 bg-gradient-to-r from-accent/80 to-accent text-accent-foreground rounded-2xl font-heading font-bold text-lg cursor-pointer hover:shadow-lg hover:-translate-y-1 transition-all duration-300 text-center mb-4 max-w-xs"
+                  className="px-8 py-4 bg-gradient-to-r from-accent/80 to-accent text-accent-foreground rounded-2xl font-heading font-bold text-lg cursor-pointer hover:shadow-lg hover:-translate-y-1 transition-all duration-300 text-center mb-2 max-w-xs"
                 >
                   <div className="flex items-center justify-center gap-3">
                     <Shield size={22} />
@@ -378,13 +378,13 @@ const GovernancePage = () => {
 
                 {/* Lignes vers les 3 postes */}
                 <div className="flex justify-center gap-2 mb-4">
-                  <div className="w-0.5 h-6 bg-border" />
-                  <div className="w-0.5 h-6 bg-border" />
-                  <div className="w-0.5 h-6 bg-border" />
+                  <div className="w-1 h-6 bg-border" />
+                  <div className="w-1 h-6 bg-border" />
+                  <div className="w-1 h-6 bg-border" />
                 </div>
 
                 {/* Trésorier, Secrétaire Générale, Commissaire aux Comptes - EN LIGNE */}
-                <div className="flex justify-center gap-4">
+                <div className="flex ml-20 justify-center gap-4">
                   {positions
                     .filter((p) => p.parent === "vice-president")
                     .map((position) => (
@@ -400,7 +400,7 @@ const GovernancePage = () => {
                           onClick={() => setSelectedPosition(position)}
                           className="community-card cursor-pointer hover:-translate-y-2 transition-all duration-300 p-3"
                         >
-                          <div className="w-10 h-10 mx-auto mb-2 rounded-full bg-accent/20 flex items-center justify-center">
+                          <div className="w-10 h-10 mx-auto rounded-full bg-accent/20 flex items-center justify-center">
                             <position.icon
                               size={20}
                               className="text-accent-foreground"
@@ -417,8 +417,8 @@ const GovernancePage = () => {
             </motion.div>
 
             {/* Ligne verticale depuis Bureau Exécutif vers Chargés des Programmes */}
-            <div className="flex justify-center mb-8">
-              <div className="w-0.5 h-8 bg-border" />
+            <div className="flex justify-center mb-1">
+              <div className="w-1 h-10 bg-border" />
             </div>
 
             {/* Niveau 4: Chargés des Programmes */}
@@ -432,7 +432,7 @@ const GovernancePage = () => {
               {/* Chargés des Programmes */}
               <motion.div
                 onClick={() => setSelectedPosition(positions[8])}
-                className="px-8 py-4 bg-gradient-to-r from-primary/90 to-primary text-primary-foreground rounded-2xl font-heading font-bold text-lg cursor-pointer hover:shadow-lg hover:-translate-y-1 transition-all duration-300 mb-6 text-center max-w-sm"
+                className="px-8 py-4 bg-gradient-to-r from-primary/90 to-primary text-primary-foreground rounded-2xl font-heading font-bold text-lg cursor-pointer hover:shadow-lg hover:-translate-y-1 transition-all duration-300 mb-2 text-center max-w-sm"
               >
                 <div className="flex items-center justify-center gap-3">
                   <Briefcase size={22} />
@@ -540,7 +540,7 @@ const GovernancePage = () => {
                         <span className="text-sm text-muted-foreground">
                           {
                             positions.find(
-                              (p) => p.id === selectedPosition.parent
+                              (p) => p.id === selectedPosition.parent,
                             )?.title
                           }
                         </span>

@@ -1,6 +1,6 @@
 import { useSwipeable } from "react-swipeable";
 import React, { useState, useRef, useEffect, useCallback } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import {
   ArrowRight,
@@ -27,8 +27,23 @@ import heroImage from "../assets/WhatsApp Image 2026-01-03 at 17.20.44.jpeg";
 import projectDev from "@/assets/project-development.jpg";
 import projectHealth from "@/assets/project-health.jpg";
 import projectEducation from "@/assets/project-education.jpg";
-import projectAid from "@/assets/project-aid.jpg";
+import projectAid from "@/assets/AC 2.jpg";
 import presidentPortrait from "../assets/president-portrait.jpeg";
+
+// Slider Images
+const projet1Images = Object.values(
+  import.meta.glob("../assets/Projet_1/**/*.jpeg", {
+    eager: true,
+    import: "default",
+  }),
+);
+const projet2Images = Object.values(
+  import.meta.glob("../assets/Projet_2/*.jpeg", {
+    eager: true,
+    import: "default",
+  }),
+);
+const sliderImages = [...projet1Images, ...projet2Images] as string[];
 
 const stats = [
   { number: "15+", label: "Années d'Expérience" },
@@ -246,10 +261,60 @@ const news = [
 const HomePage = () => {
   const [selectedNews, setSelectedNews] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [sliderIndex, setSliderIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const [isTablet, setIsTablet] = useState(false);
   const [compactMode, setCompactMode] = useState(false);
   const carouselRef = useRef(null);
+
+  // Typewriter logic
+  const [typewriterText, setTypewriterText] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [loopNum, setLoopNum] = useState(0);
+  const [typingSpeed, setTypingSpeed] = useState(100);
+
+  const phrases = [
+    "C'est donner un peu de nous pour les autres.",
+    "Un engagement pour l'enfance et la jeunesse.",
+    "Bâtir ensemble un avenir plus solidaire.",
+    "Éducation et Santé : Nos piliers d'action.",
+  ];
+
+  useEffect(() => {
+    const handleType = () => {
+      const i = loopNum % phrases.length;
+      const fullText = phrases[i];
+
+      setTypewriterText(
+        isDeleting
+          ? fullText.substring(0, typewriterText.length - 1)
+          : fullText.substring(0, typewriterText.length + 1),
+      );
+
+      if (!isDeleting && typewriterText === fullText) {
+        setTypingSpeed(2000); // Wait at end
+        setIsDeleting(true);
+      } else if (isDeleting && typewriterText === "") {
+        setIsDeleting(false);
+        setLoopNum(loopNum + 1);
+        setTypingSpeed(500); // Wait before start next
+      } else {
+        setTypingSpeed(isDeleting ? 40 : 80);
+      }
+    };
+
+    const timer = setTimeout(handleType, typingSpeed);
+    return () => clearTimeout(timer);
+  }, [typewriterText, isDeleting, loopNum, typingSpeed]);
+
+  // Slideshow logic for hero section
+  useEffect(() => {
+    if (sliderImages.length === 0) return;
+    const interval = setInterval(() => {
+      setSliderIndex((prev) => (prev + 1) % sliderImages.length);
+    }, 4000); // Change every 4 seconds
+    return () => clearInterval(interval);
+  }, []);
 
   // Configuration responsive - 2 mobile / 3 tablette / 4 desktop
   const itemsPerView = {
@@ -336,8 +401,8 @@ const HomePage = () => {
             alt="Communauté La MEJ"
             className="w-full h-full object-cover object-center"
           />
-          {/* <div className="absolute inset-0 bg-black/30" /> */}
-          <div className="absolute inset-0 bg-gradient-to-r from-accent/70 via-accent/40 to-transparent" />
+          <div className="absolute inset-0 bg-black/30" />
+          <div className="absolute inset-0 bg-gradient-to-r from-accent/50 via-accent/10 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
         </div>
         {/* Decorative Circles */}
@@ -367,7 +432,7 @@ const HomePage = () => {
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
-                className="inline-block px-4 py-2 sm:px-6 sm:py-3 bg-primary/25 backdrop-blur-sm rounded-full text-primary-foreground font-medium text-sm sm:text-base mb-2 sm:mb-4 border border-primary/30"
+                className="inline-block px-4 py-2 sm:px-6 sm:py-3 bg-primary/25 backdrop-blur-sm rounded-full text-accent-foreground font-medium text-sm sm:text-base mb-2 sm:mb-4 border border-primary/30"
               >
                 Bienvenue à La MEJ
               </motion.span>
@@ -381,17 +446,15 @@ const HomePage = () => {
                 <div className="font-heading font-bold text-2xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl text-accent-foreground leading-tight sm:leading-tight">
                   La Maison de Enfants et des Jeunes.
                 </div>
-                <div className=" text-xl sm:text-lg md:text-lg lg:text-xl xl:text-xl text-primary leading-tight sm:leading-tight">
-                  <span className=" mr-2 text-primary relative">
-                    C'est donner un peu de nous
-                    {/* <motion.span
-                      initial={{ width: 0 }}
-                      animate={{ width: "100%" }}
-                      transition={{ delay: 0.8, duration: 0.5 }}
-                      className=" absolute bottom-1 sm:bottom-1.5 left-0 h-0.5 sm:h-1 bg-primary/50 rounded-full"
-                    /> */}
+                <div className="min-h-[1.5em] text-xl sm:text-lg md:text-lg lg:text-xl xl:text-xl text-primary leading-tight sm:leading-tight">
+                  <span className="mr-2 text-primary relative">
+                    {typewriterText}
+                    <motion.span
+                      animate={{ opacity: [1, 0] }}
+                      transition={{ duration: 0.8, repeat: Infinity }}
+                      className="inline-block w-0.5 h-[1em] bg-primary ml-1 align-middle"
+                    />
                   </span>
-                  pour les autres.
                 </div>
               </motion.h1>
 
@@ -439,7 +502,7 @@ const HomePage = () => {
                 className="flex flex-wrap gap-4 sm:gap-6 pt-6 sm:pt-8 mt-4 sm:mt-8 border-t border-accent-foreground/10"
               >
                 <div className="text-center flex-1 min-w-[80px]">
-                  <div className="text-xl sm:text-2xl md:text-3xl font-bold text-accent">
+                  <div className="text-xl sm:text-2xl md:text-3xl font-bold text-accent-foreground">
                     100+
                   </div>
                   <div className="text-xs sm:text-sm text-accent-foreground/70">
@@ -447,7 +510,7 @@ const HomePage = () => {
                   </div>
                 </div>
                 <div className="text-center flex-1 min-w-[80px]">
-                  <div className="text-xl sm:text-2xl md:text-3xl font-bold text-accent">
+                  <div className="text-xl sm:text-2xl md:text-3xl font-bold text-accent-foreground">
                     25+
                   </div>
                   <div className="text-xs sm:text-sm text-accent-foreground/70">
@@ -455,7 +518,7 @@ const HomePage = () => {
                   </div>
                 </div>
                 <div className="text-center flex-1 min-w-[80px]">
-                  <div className="text-xl sm:text-2xl md:text-3xl font-bold text-accent">
+                  <div className="text-xl sm:text-2xl md:text-3xl font-bold text-accent-foreground">
                     10+
                   </div>
                   <div className="text-xs sm:text-sm text-accent-foreground/70">
@@ -465,7 +528,6 @@ const HomePage = () => {
               </motion.div>
             </motion.div>
 
-            {/* Colonne visuelle/image - Optimisée pour responsive */}
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
@@ -478,9 +540,26 @@ const HomePage = () => {
                   transition={{ duration: 3, repeat: Infinity }}
                   className="absolute -top-8 -right-8 w-24 h-24 sm:w-32 sm:h-32 bg-secondary/20 rounded-full blur-xl"
                 />
-                <div className="relative bg-card/20 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 border border-white/10 shadow-xl sm:shadow-2xl">
-                  <div className="aspect-video rounded-xl sm:rounded-2xl bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
-                    <Play size={32} className="sm:w-12 sm:h-12 text-primary" />
+                <div className="relative bg-card/20 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 border border-white/10 shadow-xl sm:shadow-2xl overflow-hidden">
+                  <div className="aspect-video rounded-xl sm:rounded-2xl overflow-hidden bg-muted flex items-center justify-center relative">
+                    <AnimatePresence mode="wait">
+                      {sliderImages.length > 0 ? (
+                        <motion.img
+                          key={sliderIndex}
+                          src={sliderImages[sliderIndex]}
+                          alt={`Projet ${sliderIndex + 1}`}
+                          initial={{ opacity: 0, scale: 1.1 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          exit={{ opacity: 0, scale: 0.95 }}
+                          transition={{ duration: 0.8 }}
+                          className="absolute inset-0 w-full h-full object-cover"
+                        />
+                      ) : (
+                        <div className="flex items-center justify-center text-primary/40">
+                          <Play size={48} />
+                        </div>
+                      )}
+                    </AnimatePresence>
                   </div>
                   <p className="text-center mt-4 sm:mt-6 text-sm sm:text-base text-accent-foreground/80">
                     Découvrez notre communauté en action
@@ -835,406 +914,6 @@ const HomePage = () => {
         </div>
       </section>
        */}
-
-      <section className="section-padding bg-secondary/10" id="actualites">
-        <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
-          {/* En-tête avec titre et contrôles */}
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 md:mb-8 gap-4">
-            <div className="text-center md:text-left">
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-2">
-                Actualités
-              </h2>
-              <p className="text-base text-muted-foreground max-w-2xl">
-                Les dernières nouvelles de La MEJ
-              </p>
-            </div>
-
-            {/* Contrôles et indicateurs */}
-            <div className="flex items-center gap-4 w-full md:w-auto">
-              {/* Bouton mode compact (optionnel) */}
-              <button
-                onClick={() => setCompactMode(!compactMode)}
-                className="hidden lg:flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
-                title={compactMode ? "Mode normal" : "Mode compact"}
-              >
-                {compactMode ? (
-                  <Maximize2 size={18} />
-                ) : (
-                  <Minimize2 size={18} />
-                )}
-                <span className="text-sm font-medium">
-                  {compactMode ? "Étendu" : "Compact"}
-                </span>
-              </button>
-
-              {/* Indicateur de progression */}
-              <div className="text-sm text-muted-foreground bg-white/50 px-3 py-1.5 rounded-lg ml-auto md:ml-0">
-                <span className="font-semibold text-primary">
-                  {currentSlide}
-                </span>
-                <span className="mx-1">/</span>
-                <span>{totalSlides}</span>
-              </div>
-
-              {/* Contrôles navigation desktop */}
-              <div className="hidden md:flex gap-2">
-                <button
-                  onClick={prevSlide}
-                  className="p-2.5 rounded-full bg-white shadow-md hover:shadow-lg hover:bg-primary/5 transition-all border border-gray-200"
-                  aria-label="Précédent"
-                >
-                  <ChevronLeft size={20} className="text-primary" />
-                </button>
-                <button
-                  onClick={nextSlide}
-                  className="p-2.5 rounded-full bg-white shadow-md hover:shadow-lg hover:bg-primary/5 transition-all border border-gray-200"
-                  aria-label="Suivant"
-                >
-                  <ChevronRight size={20} className="text-primary" />
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* Indicateur de swipe mobile */}
-          {isMobile && (
-            <div className="md:hidden flex justify-center items-center gap-2 mb-4">
-              <div className="flex items-center gap-2 text-xs text-muted-foreground bg-white/80 px-3 py-1.5 rounded-full">
-                <ArrowLeft size={14} className="text-primary" />
-                <span className="font-medium">Glisser</span>
-                <ArrowRight size={14} className="text-primary" />
-              </div>
-            </div>
-          )}
-
-          {/* Carrousel */}
-          <div
-            {...swipeHandlers}
-            className="relative overflow-hidden rounded-xl bg-white/20 p-2"
-          >
-            <motion.div
-              ref={carouselRef}
-              className="flex transition-transform duration-300 ease-out will-change-transform"
-              style={{
-                transform: `translateX(${translateX}%)`,
-                touchAction: "pan-y",
-              }}
-            >
-              {news.map((item) => (
-                <motion.article
-                  key={item.id}
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.3 }}
-                  className={`community-card group cursor-pointer flex-shrink-0 ${
-                    compactMode ? "p-3" : "p-3 sm:p-4"
-                  }`}
-                  style={{
-                    width: `${100 / currentItemsPerView}%`,
-                    // Ajustements pour le mode compact
-                    ...(compactMode && {
-                      maxWidth: "280px",
-                      margin: "0 auto",
-                    }),
-                  }}
-                  onClick={() => handleReadMore(item)}
-                >
-                  {/* Image */}
-                  <div
-                    className={`relative overflow-hidden rounded-lg mb-3 ${
-                      compactMode ? "h-32" : "h-36 sm:h-40"
-                    }`}
-                  >
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      loading="lazy"
-                    />
-                    <div className="absolute top-2 left-2">
-                      <span
-                        className={`px-2 py-0.5 bg-primary text-white font-semibold rounded-full ${
-                          compactMode ? "text-[10px]" : "text-xs"
-                        }`}
-                      >
-                        {item.category}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Contenu */}
-                  <div className="space-y-2">
-                    {/* Date */}
-                    <div className="flex items-center gap-1.5">
-                      <Calendar
-                        size={compactMode ? 12 : 14}
-                        className="text-primary"
-                      />
-                      <span
-                        className={`text-muted-foreground ${
-                          compactMode ? "text-[11px]" : "text-xs sm:text-sm"
-                        }`}
-                      >
-                        {item.date}
-                      </span>
-                    </div>
-
-                    {/* Titre */}
-                    <h3
-                      className={`font-bold text-foreground group-hover:text-primary transition-colors line-clamp-2 ${
-                        compactMode
-                          ? "text-sm leading-tight"
-                          : "text-base sm:text-lg leading-snug"
-                      }`}
-                    >
-                      {item.title}
-                    </h3>
-
-                    {/* Extrait */}
-                    {!compactMode && (
-                      <p className="text-muted-foreground line-clamp-2 text-xs sm:text-sm leading-relaxed">
-                        {item.excerpt}
-                      </p>
-                    )}
-
-                    {/* Métadonnées */}
-                    {!compactMode && (
-                      <div className="flex items-center justify-between pt-2 border-t border-gray-100">
-                        <div className="flex items-center gap-2 text-xs text-gray-500">
-                          <div className="flex items-center gap-1">
-                            <User size={12} />
-                            <span className="hidden xs:inline">
-                              {item.author}
-                            </span>
-                            <span className="xs:hidden">
-                              {item.author.split(" ")[0]}
-                            </span>
-                          </div>
-                          <div className="flex items-center gap-1">
-                            <Clock size={12} />
-                            <span>{item.readTime}</span>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Bouton Lire plus */}
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleReadMore(item);
-                      }}
-                      className={`inline-flex items-center gap-1 text-primary font-medium group-hover:gap-2 transition-all ${
-                        compactMode ? "text-xs" : "text-sm"
-                      }`}
-                    >
-                      <span>Lire</span>
-                      <ChevronRight
-                        size={compactMode ? 12 : 14}
-                        className="group-hover:translate-x-0.5 transition-transform"
-                      />
-                    </button>
-                  </div>
-                </motion.article>
-              ))}
-            </motion.div>
-
-            {/* Flèches de navigation mobile (overlay) */}
-            {isMobile && (
-              <>
-                <button
-                  onClick={prevSlide}
-                  className="absolute left-1 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/90 shadow-lg backdrop-blur-sm z-10"
-                  aria-label="Précédent"
-                >
-                  <ChevronLeft size={18} className="text-primary" />
-                </button>
-                <button
-                  onClick={nextSlide}
-                  className="absolute right-1 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/90 shadow-lg backdrop-blur-sm z-10"
-                  aria-label="Suivant"
-                >
-                  <ChevronRight size={18} className="text-primary" />
-                </button>
-              </>
-            )}
-          </div>
-
-          {/* Indicateurs de points et bouton Voir tout */}
-          <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-6">
-            {/* Points indicateurs */}
-            <div className="flex gap-1.5">
-              {Array.from({ length: totalSlides }).map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentIndex(index * currentItemsPerView)}
-                  className={`transition-all duration-300 rounded-full ${
-                    index === Math.floor(currentIndex / currentItemsPerView)
-                      ? "bg-primary w-6 sm:w-8 h-2"
-                      : "bg-gray-300 w-2 h-2 hover:bg-gray-400"
-                  }`}
-                  aria-label={`Aller au slide ${index + 1}`}
-                />
-              ))}
-            </div>
-
-            {/* Boutons d'action */}
-            <div className="flex items-center gap-3">
-              <span className="text-xs text-muted-foreground hidden sm:inline">
-                {currentItemsPerView} articles visibles
-              </span>
-              <button
-                onClick={() => setCurrentIndex(0)}
-                className="text-sm text-primary font-medium hover:text-primary/80 transition-colors px-4 py-2 bg-white border border-gray-200 rounded-lg hover:bg-gray-50"
-              >
-                Voir toutes les actualités
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Modal de lecture */}
-        {selectedNews && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/70 backdrop-blur-sm">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-white rounded-xl sm:rounded-2xl max-w-2xl lg:max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col shadow-2xl"
-            >
-              {/* En-tête du modal */}
-              <div className="sticky top-0 bg-white px-4 sm:px-6 pt-4 sm:pt-6 pb-3 sm:pb-4 border-b flex justify-between items-start z-10">
-                <div className="pr-6">
-                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-primary/10 text-primary text-xs sm:text-sm font-semibold rounded-full mb-2">
-                    <span className="w-1.5 h-1.5 bg-primary rounded-full" />
-                    {selectedNews.category}
-                  </span>
-                  <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-foreground leading-tight">
-                    {selectedNews.title}
-                  </h2>
-                </div>
-                <button
-                  onClick={closeModal}
-                  className="p-1.5 sm:p-2 hover:bg-gray-100 rounded-full transition-colors shrink-0"
-                  aria-label="Fermer"
-                >
-                  <X size={20} className="sm:w-6 sm:h-6" />
-                </button>
-              </div>
-
-              {/* Contenu défilable */}
-              <div className="overflow-y-auto flex-1">
-                {/* Image héro */}
-                <div className="relative h-48 sm:h-56 md:h-64 lg:h-72">
-                  <img
-                    src={selectedNews.image}
-                    alt={selectedNews.title}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-
-                {/* Contenu détaillé */}
-                <div className="p-4 sm:p-6 md:p-8">
-                  {/* Métadonnées */}
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-6 text-sm">
-                    <div className="flex items-center gap-2">
-                      <Calendar size={16} className="text-primary" />
-                      <div>
-                        <div className="font-medium">Date</div>
-                        <div className="text-foreground">
-                          {selectedNews.date}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <User size={16} className="text-primary" />
-                      <div>
-                        <div className="font-medium">Auteur</div>
-                        <div className="text-foreground">
-                          {selectedNews.author}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Clock size={16} className="text-primary" />
-                      <div>
-                        <div className="font-medium">Lecture</div>
-                        <div className="text-foreground">
-                          {selectedNews.readTime}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Contenu principal */}
-                  <div className="prose max-w-none">
-                    <p className="text-gray-700 leading-relaxed mb-6">
-                      {selectedNews.content}
-                    </p>
-
-                    {/* Section points clés */}
-                    <div className="bg-gray-50 rounded-lg p-4 sm:p-6 my-6">
-                      <h3 className="text-lg font-bold text-foreground mb-3">
-                        Points clés
-                      </h3>
-                      <ul className="space-y-2 text-gray-700">
-                        <li className="flex items-start gap-2">
-                          <ChevronRight
-                            size={14}
-                            className="text-primary mt-1"
-                          />
-                          <span>
-                            Programme adapté aux besoins des entrepreneurs
-                          </span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <ChevronRight
-                            size={14}
-                            className="text-primary mt-1"
-                          />
-                          <span>
-                            Accompagnement personnalisé par des experts
-                          </span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <ChevronRight
-                            size={14}
-                            className="text-primary mt-1"
-                          />
-                          <span>Réseau de partenaires et d'investisseurs</span>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Pied de modal */}
-              <div className="sticky bottom-0 bg-white px-4 sm:px-6 py-3 sm:py-4 border-t flex flex-col sm:flex-row justify-between items-center gap-3">
-                <div className="text-xs sm:text-sm text-muted-foreground">
-                  Article publié par La MEJ • {selectedNews.date}
-                </div>
-                <div className="flex gap-2">
-                  <button
-                    onClick={closeModal}
-                    className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors text-sm"
-                  >
-                    Fermer
-                  </button>
-                  <button
-                    onClick={() =>
-                      navigator.clipboard.writeText(window.location.href)
-                    }
-                    className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors text-sm"
-                  >
-                    Partager
-                  </button>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        )}
-      </section>
 
       {/* CTA Section */}
       <section className="py-20 bg-accent relative overflow-hidden">

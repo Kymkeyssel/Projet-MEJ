@@ -5,8 +5,9 @@ import SectionTitle from "@/components/SectionTitle";
 import heroImage from "@/assets/hero-community.jpg";
 import Axe2 from "../assets/AxeStrategique_2.jpeg";
 import Axe3 from "../assets/AxeStrategique_3.jpeg";
-import projectAid from "@/assets/project-aid.jpg";
 import Axe1 from "../assets/AxeStrategique_1.jpeg";
+import Axe4 from "../assets/ENFANTS 5.jpg.jpeg";
+import Axe5 from "../assets/482203810_965308705702902_5613269267477799690_n.jpg.jpeg";
 import {
   FileText,
   Heart,
@@ -70,7 +71,7 @@ const strategicAxes = [
     shortDescription: "...",
     fullDescription:
       "A travers cet axe, nous nous assurons que les enfants adolescents et jeunes des zones rurales aient aussi accès à l'écoute, aux documents et jeux éducatifs, films éducatifs, accès aux NTIC",
-    image: projectAid,
+    image: Axe4,
     color: "bg-pastel-orange/30",
     iconColor: "text-foreground",
     expandDirection: "left",
@@ -81,7 +82,7 @@ const strategicAxes = [
     shortDescription: "...",
     fullDescription:
       "Activités d’adaptation aux changements climatiques et de protection des femmes et des enfants dans l’agriculture familiale. ",
-    image: projectAid,
+    image: Axe5,
     color: "bg-pastel-orange/30",
     iconColor: "text-foreground",
     expandDirection: "right",

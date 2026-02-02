@@ -1,41 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ChevronLeft, ChevronRight, ZoomIn } from "lucide-react";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { X, ChevronLeft, ChevronRight, ZoomIn, Loader2 } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 
-// Sample photos - in production, these would come from Google Drive API
-import heroImage from "@/assets/hero-community.jpg";
-import projectDev from "@/assets/project-development.jpg";
-import projectHealth from "@/assets/project-health.jpg";
+// Configuration Drive
+const FOLDER_ID = import.meta.env.VITE_GOOGLE_DRIVE_FOLDER_ID;
+const API_KEY = import.meta.env.VITE_GOOGLE_DRIVE_API_KEY;
 
-const samplePhotos = [
-  {
-    id: 1,
-    src: heroImage,
-    title: "Réunion communautaire",
-    category: "Événements",
-  },
-  {
-    id: 2,
-    src: projectDev,
-    title: "Projet développement",
-    category: "Projets",
-  },
-  {
-    id: 3,
-    src: projectHealth,
-    title: "Sensibilisation santé",
-    category: "Santé",
-  },
-  {
-    id: 4,
-    src: heroImage,
-    title: "Assemblée générale",
-    category: "Gouvernance",
-  },
-  { id: 5, src: projectDev, title: "Aide directe", category: "Actions" },
-  { id: 6, src: projectHealth, title: "Formation", category: "Éducation" },
-];
+interface Photo {
+  id: string;
+  src: string;
+  title: string;
+  category: string;
+}
 
 interface PhotothequeModalProps {
   isOpen: boolean;
@@ -43,20 +25,54 @@ interface PhotothequeModalProps {
 }
 
 const PhotothequeModal = ({ isOpen, onClose }: PhotothequeModalProps) => {
-  const [selectedPhoto, setSelectedPhoto] = useState<number | null>(null);
+  const [photos, setPhotos] = useState<Photo[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedPhoto, setSelectedPhoto] = useState<string | null>(null);
   const [activeCategory, setActiveCategory] = useState<string>("Tous");
 
-  const categories = ["Tous", ...new Set(samplePhotos.map((p) => p.category))];
+  useEffect(() => {
+    if (!isOpen) return;
+
+    async function fetchFiles() {
+      try {
+        setLoading(true);
+        const url = `https://www.googleapis.com/drive/v3/files?q='${FOLDER_ID}'+in+parents+and+mimeType+contains+'image/'&fields=files(id,name,mimeType,modifiedTime)&key=${API_KEY}`;
+        const response = await fetch(url);
+        const data = await response.json();
+
+        if (data.files) {
+          const drivePhotos: Photo[] = data.files.map((file: any) => ({
+            id: file.id,
+            src: `https://drive.google.com/thumbnail?id=${file.id}&sz=w1000`,
+            title: file.name.replace(/\.[^/.]+$/, ""),
+            category: "Général", // Catégorie par défaut car le Drive ne fournit pas cette info directement
+          }));
+          setPhotos(drivePhotos);
+        }
+      } catch (error) {
+        console.error(
+          "❌ Erreur lors du chargement de la photothèque :",
+          error,
+        );
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchFiles();
+  }, [isOpen]);
+
+  const categories = ["Tous", ...new Set(photos.map((p) => p.category))];
 
   const filteredPhotos =
     activeCategory === "Tous"
-      ? samplePhotos
-      : samplePhotos.filter((p) => p.category === activeCategory);
+      ? photos
+      : photos.filter((p) => p.category === activeCategory);
 
   const handlePrev = () => {
     if (selectedPhoto !== null) {
       const currentIndex = filteredPhotos.findIndex(
-        (p) => p.id === selectedPhoto
+        (p) => p.id === selectedPhoto,
       );
       const prevIndex =
         (currentIndex - 1 + filteredPhotos.length) % filteredPhotos.length;
@@ -67,18 +83,22 @@ const PhotothequeModal = ({ isOpen, onClose }: PhotothequeModalProps) => {
   const handleNext = () => {
     if (selectedPhoto !== null) {
       const currentIndex = filteredPhotos.findIndex(
-        (p) => p.id === selectedPhoto
+        (p) => p.id === selectedPhoto,
       );
       const nextIndex = (currentIndex + 1) % filteredPhotos.length;
       setSelectedPhoto(filteredPhotos[nextIndex].id);
     }
   };
 
-  const selectedPhotoData = samplePhotos.find((p) => p.id === selectedPhoto);
+  const selectedPhotoData = photos.find((p) => p.id === selectedPhoto);
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-5xl w-full max-h-[90vh] overflow-hidden p-0 bg-card rounded-3xl">
+        <DialogTitle className="sr-only">Photothèque La MEJ</DialogTitle>
+        <DialogDescription className="sr-only">
+          Galerie d'images synchronisée avec Google Drive.
+        </DialogDescription>
         <div className="relative">
           {/* Header */}
           <div className="sticky top-0 z-10 bg-card/95 backdrop-blur-sm px-6 py-4 border-b border-border flex items-center justify-between">
@@ -112,35 +132,54 @@ const PhotothequeModal = ({ isOpen, onClose }: PhotothequeModalProps) => {
 
           {/* Photo Grid */}
           <div className="p-6 max-h-[60vh] overflow-y-auto">
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {filteredPhotos.map((photo, index) => (
-                <motion.div
-                  key={photo.id}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.3, delay: index * 0.05 }}
-                  onClick={() => setSelectedPhoto(photo.id)}
-                  className="relative aspect-square rounded-2xl overflow-hidden cursor-pointer group"
-                >
-                  <img
-                    src={photo.src}
-                    alt={photo.title}
-                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-accent/0 group-hover:bg-accent/40 transition-colors duration-300 flex items-center justify-center">
-                    <ZoomIn
-                      size={24}
-                      className="text-accent-foreground opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            {loading ? (
+              <div className="flex flex-col items-center justify-center py-20">
+                <Loader2 className="w-10 h-10 text-primary animate-spin mb-4" />
+                <p className="text-muted-foreground animate-pulse">
+                  Chargement des photos...
+                </p>
+              </div>
+            ) : filteredPhotos.length === 0 ? (
+              <div className="text-center py-20">
+                <p className="text-muted-foreground">
+                  Aucune photo disponible.
+                </p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {filteredPhotos.map((photo, index) => (
+                  <motion.div
+                    key={photo.id}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.3, delay: index * 0.05 }}
+                    onClick={() => setSelectedPhoto(photo.id)}
+                    className="relative aspect-square rounded-2xl overflow-hidden cursor-pointer group"
+                  >
+                    <img
+                      src={photo.src}
+                      alt={photo.title}
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src =
+                          `https://drive.google.com/uc?export=view&id=${photo.id}`;
+                      }}
                     />
-                  </div>
-                  <div className="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-t from-accent/80 to-transparent">
-                    <p className="text-accent-foreground text-xs font-medium truncate">
-                      {photo.title}
-                    </p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+                    <div className="absolute inset-0 bg-accent/0 group-hover:bg-accent/40 transition-colors duration-300 flex items-center justify-center">
+                      <ZoomIn
+                        size={24}
+                        className="text-accent-foreground opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                      />
+                    </div>
+                    <div className="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-t from-accent/80 to-transparent">
+                      <p className="text-accent-foreground text-xs font-medium truncate">
+                        {photo.title}
+                      </p>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Lightbox */}

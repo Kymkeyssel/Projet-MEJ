@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { Eye, Target, Heart, CheckCircle, X, Goal } from "lucide-react";
 import { useState } from "react";
 import heroImage from "@/assets/hero-community.jpg";
-import projectDev from "@/assets/project-development.jpg";
+import projectDev from "@/assets/AU SOLIDAYS 2023.jpg.jpeg";
 
 const objectives = [
   "Développer des programmes de prévention, de prise en charge globale des IST/VIH, et de promotion de la santé sexuelle et reproductive des enfants et des jeunes.",
