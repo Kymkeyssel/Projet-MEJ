@@ -9,8 +9,8 @@ import {
 } from "@/components/ui/dialog";
 
 // Configuration Drive
-const FOLDER_ID = import.meta.env.VITE_GOOGLE_DRIVE_FOLDER_ID;
-const API_KEY = import.meta.env.VITE_GOOGLE_DRIVE_API_KEY;
+const FOLDER_ID = "1kj62IEkAP7ZtOCjrERkKCKIzwF7ZJyB0";
+const API_KEY = "AIzaSyA45rW5BUH7q435U6rC78gnSeYhB0wGI04";
 
 interface Photo {
   id: string;
