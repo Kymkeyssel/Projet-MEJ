@@ -97,7 +97,7 @@ const AboutPage = () => {
                 Notre Organisation
               </span>
               <h2 className="font-heading font-bold text-xl sm:text-2xl md:text-3xl lg:text-4xl text-foreground mb-4 sm:mb-5 md:mb-6">
-                Des équipes unie:
+                Des équipes unies:
               </h2>
               <div className="space-y-3 sm:space-y-4">
                 <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
