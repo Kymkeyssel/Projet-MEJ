@@ -46,34 +46,34 @@ const projet2Images = Object.values(
 const sliderImages = [...projet1Images, ...projet2Images] as string[];
 
 const stats = [
-  { number: "15+", label: "Années d'Expérience" },
-  { number: "50+", label: "Projets Réalisés" },
-  { number: "10K+", label: "Bénéficiaires" },
+  { number: "Plus de 15 ans d'Expérience" },
+  { number: "De nombreux Projets Réalisés" },
+  { number: "Des milliers de bénéficiaires sans discrimination issus de toutes les couches sociales des milieux ruraux." },
 ];
 
 const values = [
   {
     icon: Users,
     title: "Solidarité",
-    description: "Nous croyons en la force de l'union et du soutien mutuel.",
+    description: "Nous croyons en la force de l'union et du soutien mutuel. La MEJ, c'est UN PEU DE NOUS POUR LES AUTRES!",
   },
   {
     icon: Heart,
     title: "Humanité",
     description:
-      "Chaque action est guidée par le respect et la dignité humaine.",
+      "Nos actions sont guidées par la bienveillance et le respect et la dignité humaine.",
   },
   {
     icon: Target,
     title: "Engagement",
     description:
-      "Nous nous engageons pleinement pour le bien-être de notre communauté.",
+      "Nos équipes s'impliquent volontairement sans discrimination vers un avenir meilleur pour le bien-être de nos cibles.",
   },
   {
     icon: Stethoscope,
     title: "Santé et Bien-être Global",
     description:
-      "Promotion de la santé physique (sexuelle) et mentale dans la communauté.",
+      "Nous faisons la promotion de la santé (physique et morale) comme fondement de toutes les actions de développement. .",
   },
 ];
 
@@ -464,8 +464,7 @@ const HomePage = () => {
                 transition={{ duration: 0.6, delay: 0.4 }}
                 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-accent-foreground/95 font-accent italic border-l-3 sm:border-l-4 border-primary/40 pl-4 sm:pl-6 py-1 sm:py-2 my-4 sm:my-6"
               >
-                "Association créée au Cameroun (Préfecture de Dschang) sous la
-                Déclaration N°80/RDA/F.34/BAPP du 22 Décembre 2008."
+                "Association légalisée au Cameroun sous le N° 80/RDAF/F.34/BAPP du 22 Décembre  2008, Préfecture de Dschang"
               </motion.p>
 
               {/* Boutons sur la même ligne */}
@@ -562,7 +561,7 @@ const HomePage = () => {
                     </AnimatePresence>
                   </div>
                   <p className="text-center mt-4 sm:mt-6 text-sm sm:text-base text-accent-foreground/80">
-                    Découvrez notre communauté en action
+                    Découvrez nos equipes en action
                   </p>
                 </div>
               </div>
@@ -583,10 +582,10 @@ const HomePage = () => {
       {/* Stats Section */}
       <section className="py-5 bg-primary/10">
         <div className="container mx-auto px-4 md:px-8">
-          <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8 ">
+          <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8 ">
             {stats.map((stat, index) => (
               <motion.div
-                key={stat.label}
+                key={stat.number}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{
@@ -597,12 +596,10 @@ const HomePage = () => {
                 viewport={{ once: true }}
                 className="text-center p-2 sm:p-1 bg-white/40 backdrop-blur-sm rounded-lg sm:rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-300"
               >
-                <span className="block font-heading font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-primary ">
+                <span className={`block font-heading font-bold text-xl sm:text-xl md:text-3xl lg:text-3xl text-primary ${index === 2 ? 'text-sm sm:text-base md:text-xl lg:text-xl' : ''}`}>
                   {stat.number}
                 </span>
-                <span className="text-xs sm:text-sm md:text-base text-muted-foreground leading-tight sm:leading-normal">
-                  {stat.label}
-                </span>
+                
               </motion.div>
             ))}
           </div>
@@ -614,7 +611,7 @@ const HomePage = () => {
         <div className="container mx-auto px-4 md:px-8">
           <SectionTitle
             title="Mot de la Présidente"
-            subtitle="Un message de Bienvenue de notre fondatrice et guide"
+            // subtitle="Un message de Bienvenue de notre fondatrice et guide"
           />
 
           {/* Version Desktop - Layout original */}
@@ -644,37 +641,27 @@ const HomePage = () => {
               viewport={{ once: true }}
               className="space-y-6"
             >
-              <blockquote className="text-xl md:text-2xl text-foreground/90 leading-relaxed italic font-accent text-xl">
-                " La MEJ, c’est une histoire et une identité, une histoire qui
-                continue de se forger depuis plus de 15 ans en s’appuyant sur de
-                nombreuses personnes qui ont très vite compris que le
-                développement passe par l’éducation précoce et la prévention en
-                santé avec une vision selon laquelle il est possible de
-                construire une société où les enfants et jeunes vivent en bonne
-                santé et jouissent du bien-être global, sans distinction
-                aucune.. Avec une vision très ambitieuse, nous avions toujours
-                ce goût de l’inachevé, mais des ressources intangibles autour de
-                nous, et de nombreux partenaires, nous ont donné l’envie et la
-                force de continuer notre mission sociale. Acteurs et actrices
-                communautaires, nos membres se sont inscrits dans une
-                perspective globale de développement. L’équipe de la MEJ, malgré
-                les ressources limitées garde le cap, restant consciente des
-                enjeux de santé préventive et communautaire, d’écoute et
-                d’accompagnement de nos cibles nécessiteuses de plus en plus
-                nombreuses, de soutien aux femmes et filles victimes de
-                violences basées sur le genre et vers leur autonomisation,
-                d’implication dans la lutte contre les changements climatiques
-                pour une santé globale. "
+              <blockquote className="text-2xl font-semibold md:text-2xl text-foreground/90 leading-relaxed italic font-accent text-xl">
+                " La MEJ, c’est une histoire et une identité.
+Elle est une histoire qui continue de se forger depuis plus de 15 ans en s’appuyant sur de nombreuses personnes qui ont très vite compris que le développement passe par l’éducation précoce et la prévention en santé. 
+La MEJ a une vision selon laquelle il est possible de construire une société où les enfants et jeunes vivent en bonne santé et jouissent du bien-être global, sans distinction aucune. 
+Avec une vision de départ très ambitieuse, nous avions toujours un goût de l’inachevé, mais des ressources intangibles autour de nous, et de nombreux partenaires, nous ont donné l’envie et la force de continuer notre mission sociale, en nous inscrivant  dans une perspective globale de développement. 
+L’équipe de la MEJ, malgré les ressources limitées garde le cap, reste consciente des enjeux de santé préventive et communautaire, d’écoute et d’accompagnement de nos cibles nécessiteuses de plus en plus nombreuses, de soutien aux femmes et filles victimes de violences basées sur le genre et vers leur autonomisation, d’implication dans la lutte contre les changements climatiques pour une santé globale. 
+Merci à toutes ces personnes morales et physiques qui soutiennent au quotidien notre mission sociale. 
+A ceux qui doutent encore, rejoignez-nous.
+Merci."
               </blockquote>
               <div className="pt-4">
                 <p className="font-heading italic font-semibold text-lg text-accent">
-                  Mme YMELE NOUAZI Berte FLorence
+                  Mme YMELE Berthe 
+                </p>
+                <p className="text-muted-foreground font-thin text-base mt-2">
+                  Assistante Principale des Affaires Sociales 
+Experte consultante en Développement 
+Genre et droits humains en santé.
                 </p>
                 <p className="text-muted-foreground ">Presidente MEJ</p>
-                <p className="text-muted-foreground font-thin text-sm mt-2">
-                  Assistante Principale des Affaires Sociales Experte
-                  consultante en Développement Genre et droits humains en santé.
-                </p>
+                
               </div>
             </motion.div>
           </div>
@@ -936,12 +923,10 @@ const HomePage = () => {
             className="text-center max-w-3xl mx-auto"
           >
             <h2 className="font-heading font-bold text-3xl md:text-4xl text-accent-foreground mb-4">
-              Rejoignez Notre Mouvement
+              Rejoignez Notre Mission Sociale
             </h2>
             <p className="text-accent-foreground/80 text-lg mb-8">
-              Ensemble, nous pouvons faire la différence. Rejoignez notre
-              communauté et participez à la construction d'une communauté
-              meilleure.
+               Ensemble, nous pouvons faire la différence. Rejoignez nos équipes et participons ensemble à la construction d'une société meilleure.
             </p>
             <Link
               to="/contact"

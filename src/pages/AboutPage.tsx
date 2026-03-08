@@ -2,7 +2,9 @@ import { motion } from "framer-motion";
 import { Eye, Target, Heart, CheckCircle, X, Goal } from "lucide-react";
 import { useState } from "react";
 import heroImage from "@/assets/hero-community.jpg";
-import projectDev from "@/assets/AU SOLIDAYS 2023.jpg.jpeg";
+import projectDev from "../assets/WhatsApp Image 2026-03-08 at 14.12.58.jpeg";
+import projectDev2 from "../assets/WhatsApp Image 2026-03-08 at 14.18.26.jpeg";
+import projectDev3 from "../assets/WhatsApp Image 2026-03-08 at 14.22.24.jpeg";
 
 const objectives = [
   "Développer des programmes de prévention, de prise en charge globale des IST/VIH, et de promotion de la santé sexuelle et reproductive des enfants et des jeunes.",
@@ -95,13 +97,13 @@ const AboutPage = () => {
                 Notre Organisation
               </span>
               <h2 className="font-heading font-bold text-xl sm:text-2xl md:text-3xl lg:text-4xl text-foreground mb-4 sm:mb-5 md:mb-6">
-                Une communauté unie:
+                Des equipes unie:
               </h2>
               <div className="space-y-3 sm:space-y-4">
                 <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
                   La MEJ (La Maison de Enfants et des Jeunes) est une
                   association communautaire fondée sur les principes de
-                  solidarité, de dialogue et d'entraide. Notre organisation
+                  solidarité, humanité, engagement, Santé et Bien-être Global. Notre organisation
                   rassemble des membres de tous horizons, unis par une vision
                   commune : construire ensemble un avenir meilleur pour notre
                   communauté.
@@ -123,15 +125,38 @@ const AboutPage = () => {
               viewport={{ once: true }}
               className="relative"
             >
-              <div className="relative z-10 rounded-xl sm:rounded-2xl md:rounded-3xl overflow-hidden shadow-lg sm:shadow-warm">
-                <img
-                  src={projectDev}
-                  alt="Notre Organisation"
-                  className="w-full aspect-[4/3] object-cover"
-                />
+              <div className="relative">
+                {/* Grid of 3 images: 2 on first row, 1 centered on second row */}
+                <div className="grid grid-cols-2 gap-3 md:gap-4 max-w-2xl mx-auto">
+                  {/* First row: 2 images */}
+                  <div className="relative z-10 rounded-xl sm:rounded-2xl md:rounded-3xl overflow-hidden shadow-lg sm:shadow-warm">
+                    <img
+                      src={projectDev}
+                      alt="Notre Organisation 1"
+                      className="w-full aspect-[4/3] object-cover"
+                    />
+                  </div>
+                  <div className="relative z-10 rounded-xl sm:rounded-2xl md:rounded-3xl overflow-hidden shadow-lg sm:shadow-warm">
+                    <img
+                      src={projectDev2}
+                      alt="Notre Organisation 2"
+                      className="w-full aspect-[4/3] object-cover"
+                    />
+                  </div>
+                  {/* Second row: 1 image centered */}
+                  <div className="col-span-2 flex justify-center">
+                    <div className="relative z-10 rounded-xl sm:rounded-2xl md:rounded-3xl overflow-hidden shadow-lg sm:shadow-warm w-full max-w-[50%]">
+                      <img
+                        src={projectDev3}
+                        alt="Notre Organisation 3"
+                        className="w-full aspect-[4/3] object-cover"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="absolute -bottom-4 -left-4 sm:-bottom-5 sm:-left-5 w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 rounded-full bg-secondary/30 -z-10" />
+                <div className="absolute -top-4 -right-4 sm:-top-5 sm:-right-5 w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full bg-primary/20 -z-10" />
               </div>
-              <div className="absolute -bottom-4 -left-4 sm:-bottom-5 sm:-left-5 w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 rounded-full bg-secondary/30 -z-10" />
-              <div className="absolute -top-4 -right-4 sm:-top-5 sm:-right-5 w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full bg-primary/20 -z-10" />
             </motion.div>
           </div>
         </div>

@@ -176,23 +176,23 @@ const projects = [
         images: [
           {
             src: projectImages[13],
-            comment: "Rencontre avec les reines de la communauté",
+            comment: "Journée de Santé a la chefferie TSINBEU",
           },
           {
             src: projectImages[14],
-            comment: "Cérémonie traditionnelle d'engagement",
+            comment: "Chef de Mpfeng apres un seacnce de sensibilisation avec de nombreuses reines",
           },
           {
             src: projectImages[15],
-            comment: "Atelier de formation des leaders traditionnels",
+            comment: "Campagne de dépistage",
           },
           {
             src: projectImages[16],
-            comment: "Séance de travail avec les épouses de notables",
+            comment: "Journée de santé à la chefferie Mekong, c'est aller vers les malades avec les soins",
           },
           {
             src: projectImages[17],
-            comment: "Action communautaire de sensibilisation",
+            comment: "Journee de reflexion",
           },
           {
             src: projectImages[18],
@@ -718,12 +718,12 @@ const ProjectsPage = () => {
                             </div>
                           </div>
                           <div className="bg-white p-3 rounded-lg">
-                            <div className="text-xs text-muted-foreground mb-1">
+                            {/* <div className="text-xs text-muted-foreground mb-1">
                               Budget
                             </div>
                             <div className="text-sm font-medium text-foreground">
                               {project.budget}
-                            </div>
+                            </div> */}
                           </div>
                           <div className="bg-white p-3 rounded-lg">
                             <div className="text-xs text-muted-foreground mb-1">

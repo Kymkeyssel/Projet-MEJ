@@ -217,9 +217,24 @@ Envoyé depuis le site LAMEJ
                         Téléphone
                       </h4>
                     </div>
-                    <p className="text-muted-foreground text-[10px] sm:text-sm leading-tight sm:leading-normal">
-                      +237 6 73 21 94 76
-                    </p>
+                    <div className="flex flex-col gap-2">
+                      {[
+                        { number: "+237699848653", wa: "237699848653" },
+                        { number: "+237673219476", wa: "237673219476" },
+                        { number: "+237694720404", wa: "237694720404" },
+                      ].map((phone, idx) => (
+                        <a
+                          key={idx}
+                          href={`https://wa.me/${phone.wa}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors text-[10px] sm:text-sm"
+                        >
+                          <Phone size={14} className="text-primary flex-shrink-0" />
+                          <span>{phone.number}</span>
+                        </a>
+                      ))}
+                    </div>
                   </div>
                 </motion.div>
 
@@ -291,8 +306,7 @@ Envoyé depuis le site LAMEJ
                   Déclaration Légale
                 </h3>
                 <p className="text-primary-foreground/90 text-[10px] sm:text-sm leading-tight sm:leading-relaxed">
-                  Association à but non lucratif créée sous la Déclaration
-                  Déclaration N°80/RDA/F.34/BAPP du 22 Décembre 2008.
+                  Association à but non lucratif créée sous la Déclaration N°80/RDA/F.34/BAPP du 22 Décembre 2008, Préfecture de Dschang.
                 </p>
               </motion.div>
             </motion.div>
