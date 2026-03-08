@@ -42,8 +42,7 @@ const Footer = () => {
                 </span>
               </Link>
               <p className="text-accent-foreground/80 text-xs sm:text-sm leading-relaxed">
-                Ensemble, nous construisons des solutions pour notre communauté.
-                La parole de chacun compte.
+                Ensemble, nous construisons des solutions pour nos communauté.
               </p>
             </motion.div>
 

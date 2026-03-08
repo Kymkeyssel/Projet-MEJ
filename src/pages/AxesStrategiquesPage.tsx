@@ -8,6 +8,13 @@ import Axe3 from "../assets/AxeStrategique_3.jpeg";
 import Axe1 from "../assets/AxeStrategique_1.jpeg";
 import Axe4 from "../assets/ENFANTS 5.jpg.jpeg";
 import Axe5 from "../assets/482203810_965308705702902_5613269267477799690_n.jpg.jpeg";
+import Axe5Img1 from "../assets/axe strateigique 5/WhatsApp Image 2026-03-08 at 16.57.54.jpeg";
+import Axe5Img2 from "../assets/axe strateigique 5/WhatsApp Image 2026-03-08 at 16.57.55 (1).jpeg";
+import Axe5Img3 from "../assets/axe strateigique 5/WhatsApp Image 2026-03-08 at 16.57.55.jpeg";
+import Axe5Img4 from "../assets/axe strateigique 5/WhatsApp Image 2026-03-08 at 16.57.56 (1).jpeg";
+import Axe5Img5 from "../assets/axe strateigique 5/WhatsApp Image 2026-03-08 at 16.57.56 (2).jpeg";
+import Axe5Img6 from "../assets/axe strateigique 5/WhatsApp Image 2026-03-08 at 16.57.56 (3).jpeg";
+import Axe5Img7 from "../assets/axe strateigique 5/WhatsApp Image 2026-03-08 at 16.57.56.jpeg";
 import {
   FileText,
   Heart,
@@ -79,10 +86,19 @@ const strategicAxes = [
   {
     icon: HandHeart,
     title: "Environnement et protection de la nature.",
-    shortDescription: "...",
+    shortDescription: "Protection des enfants dans l'agriculture familiale",
     fullDescription:
       "Activités d’adaptation aux changements climatiques et de protection des femmes et des enfants dans l’agriculture familiale. ",
     image: Axe5,
+    gallery: [
+      Axe5Img1,
+      Axe5Img2,
+      Axe5Img3,
+      Axe5Img4,
+      Axe5Img5,
+      Axe5Img6,
+      Axe5Img7,
+    ],
     color: "bg-pastel-orange/30",
     iconColor: "text-foreground",
     expandDirection: "right",
@@ -149,16 +165,39 @@ const StrategicAxisCard = ({
 
           <AnimatePresence mode="wait">
             {isExpanded ? (
-              <motion.p
+              <motion.div
                 key="full"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.3 }}
-                className="text-muted-foreground text-sm leading-relaxed"
               >
-                {axis.fullDescription}
-              </motion.p>
+                <p className="text-muted-foreground text-sm leading-relaxed mb-4">
+                  {axis.fullDescription}
+                </p>
+                {/* Galerie d'images pour Axe 5 */}
+                {axis.gallery && axis.gallery.length > 0 && (
+                  <div className="mt-4">
+                    <h4 className="font-semibold text-sm mb-2 text-foreground">
+                      Galerie photos
+                    </h4>
+                    <div className="grid grid-cols-4 gap-2">
+                      {axis.gallery.map((img, idx) => (
+                        <div
+                          key={idx}
+                          className="aspect-square rounded-lg overflow-hidden"
+                        >
+                          <img
+                            src={img}
+                            alt={`Photo ${idx + 1}`}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </motion.div>
             ) : (
               <motion.p
                 key="short"
@@ -317,6 +356,38 @@ const AxisModal = ({
                   {axis.fullDescription}
                 </p>
               </div>
+
+              {/* Galerie d'images pour Axe 5 */}
+              {axis.gallery && axis.gallery.length > 0 && (
+                <div className="mb-6">
+                  <h4 className="font-semibold text-lg mb-3 text-foreground">
+                    Galerie photos
+                  </h4>
+                  <div className="relative">
+                    <div className="overflow-hidden rounded-lg">
+                      <img
+                        src={axis.gallery[0]}
+                        alt="Galerie"
+                        className="w-full h-48 object-cover"
+                      />
+                    </div>
+                    <div className="mt-3 grid grid-cols-4 gap-2">
+                      {axis.gallery.map((img, idx) => (
+                        <div
+                          key={idx}
+                          className="aspect-square rounded-lg overflow-hidden cursor-pointer hover:opacity-80 transition-opacity"
+                        >
+                          <img
+                            src={img}
+                            alt={`Photo ${idx + 1}`}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Bouton d'action */}

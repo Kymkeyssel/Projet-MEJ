@@ -10,7 +10,13 @@ import {
   ChevronLeft,
   ChevronRight,
   MessageSquare,
+  ZoomIn,
 } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import heroImage from "@/assets/hero-community.jpg";
 import ip1 from "../assets/Projet_1/rub 1/WhatsApp Image 2026-01-03 at 14.07.59.jpeg";
 import ip2 from "../assets/Projet_1/rub 1/WhatsApp Image 2026-01-03 at 14.06.58.jpeg";
@@ -21,6 +27,7 @@ import ip6 from "../assets/Projet_1/rub 1/WhatsApp Image 2026-01-03 at 14.07.14.
 import ip7 from "../assets/Projet_1/rub 1/WhatsApp Image 2026-01-03 at 14.08.02.jpeg";
 import ip8 from "../assets/Projet_1/rub 1/WhatsApp Image 2026-01-03 at 14.08.06.jpeg";
 import ip9 from "../assets/Projet_1/rub 1/WhatsApp Image 2026-01-03 at 14.07.56.jpeg";
+import ip10 from "../assets/Projet_1/rub 1/WhatsApp Image 2026-03-08 .jpeg"
 import ip11 from "../assets/Projet_1/rub 1/image1.jpeg";
 import ip12 from "../assets/Projet_1/rub 2/WhatsApp Image 2026-01-03 at 14.06.39.jpeg";
 import ip13 from "../assets/Projet_1/rub 2/WhatsApp Image 2026-01-03 at 14.06.56.jpeg";
@@ -46,6 +53,18 @@ import ip31 from "../assets/Projet_2/WhatsApp Image 2026-01-03 at 16.53.05.jpeg"
 import ip32 from "../assets/Projet_2/WhatsApp Image 2026-01-03 at 17.21.12.jpeg";
 import ip33 from "../assets/Projet_2/WhatsApp Image 2026-01-03 at 17.13.15.jpeg";
 import ip34 from "../assets/Projet_2/WhatsApp Image 2026-01-03 at 17.12.46.jpeg";
+
+// Import images for Projet 3 - Petite Enfance
+import pe1 from "../assets/ENFANTS 5.jpg.jpeg";
+import pe2 from "../assets/WhatsApp Image 2026-01-03 at 17.20.44.jpeg";
+import pe3 from "../assets/AU SOLIDAYS 2023.jpg.jpeg";
+
+// Import additional images for Projet 1 - Rubrique 1
+import lyceeBaf from "../assets/lyceeBaf.jpeg";
+import imos1 from "../assets/imos1.jpeg";
+import imos2 from "../assets/imos 2.jpeg";
+import whatsApp0308 from "../assets/Projet_1/rub 1/WhatsApp Image 2026-03-08 .jpeg";
+import whatsApp16031 from "../assets/Projet_1/rub 2/WhatsApp Image 2026-03-08 at 16.31.08.jpeg";
 
 // Tableau d'images pour chaque projet
 const projectImages = [
@@ -81,6 +100,9 @@ const projectImages = [
   ip33,
   ip34,
   heroImage,
+  pe1,
+  pe2,
+  pe3,
 ];
 
 const projects = [
@@ -95,36 +117,48 @@ const projects = [
         section: "Sensibilisation scolaire",
         images: [
           {
-            src: projectImages[0],
-            comment: "Séance de sensibilisation sur la prévention du VIH",
-          },
-          {
             src: projectImages[1],
-            comment: "Distribution de matériel éducatif dans une classe",
+            comment: "Pairs Educateurs College St Laurent, Avec leur encadreur.",
           },
           {
             src: projectImages[3],
-            comment: "Atelier d'échanges avec les élèves",
+            comment: "Pair educateurs, lycee de Baleveng. ",
           },
           {
             src: projectImages[5],
-            comment: "Présentation sur les droits reproductifs",
+            comment: "Rencontre a la MEJ.",
           },
           {
             src: projectImages[6],
-            comment: "Discussion en groupe sur la santé sexuelle",
+            comment: "Jeu de l'Oie offert par Moto action Sida: un outil éducatif ludique très utile pour les jeunes dans la prévention des IDST",
           },
           {
             src: projectImages[7],
-            comment: "Session de questions-réponses avec les jeunes",
+            comment: "Atelier de formation des pairs educateurs.",
           },
-          {
-            src: projectImages[8],
-            comment: "Activité interactive de prévention",
-          },
+          
           {
             src: projectImages[9],
-            comment: "Rencontre avec l'équipe éducative de l'établissement",
+            comment: "Seance de travail entre pairs educateurs",
+          },
+          // New images added
+          {
+            src: lyceeBaf,
+            comment: "Lycée de Bafou",
+          },
+          {
+            src: imos1,
+            comment: "Collège IMOS",
+          },
+          {
+            src: imos2,
+            comment: "Collège IMOS",
+          },
+          {
+            src: whatsApp0308, comment: "Activité de sensibilisation au sein de l'établissement",
+          },
+          {
+            src: whatsApp16031,
           },
         ],
       },
@@ -133,20 +167,8 @@ const projects = [
         section: "Ateliers pratiques",
         images: [
           {
-            src: projectImages[3],
-            comment: "Formation des pairs éducateurs",
-          },
-          {
-            src: projectImages[9],
-            comment: "Exercice pratique de communication",
-          },
-          {
             src: projectImages[10],
-            comment: "Travail en petits groupes",
-          },
-          {
-            src: projectImages[12],
-            comment: "Évaluation des connaissances acquises",
+            comment: "Concertation entre parents et parent pairs educateurs",
           },
         ],
       },
@@ -160,9 +182,8 @@ const projects = [
       "Prévention du VIH/sida basée sur le genre, la santé sexuelle et reproductive et les droits humains auprès des jeunes scolaires ruraux dans l'Arrondissement de NkongNi, Menoua à l'Ouest Cameroun. Projet soutenu par Solidarité Sida Projet en cours dans 05 établissements scolaires:\n- Lycée de Bafou\n- Lycée de Baleveng\n- Lycée bilingue de Dziih Djutitsa\n- Collège IMOS à Dziih Djutitsa\n- Collège Polyvalent Saint Laurent de Bafou",
     status: "En cours",
     impact:
-      "Sensibilisation, prévention et mise en garde de 90% de la jeunesse face aux dangers du VIH",
-    budget: "À définir",
-    duration: "En continu",
+      "Sensibilisation, prévention du VIH en milieu scolaire,",
+    duration: "Depuis 10 ans",
   },
   {
     id: 2,
@@ -194,58 +215,56 @@ const projects = [
             src: projectImages[17],
             comment: "Journee de reflexion",
           },
+            {
+            src: projectImages[12],
+            comment: "Atelier de formation des leaders traditionnels sur le le genre, le VIH en lien avec les VBG",
+          },
+          {
+            src: projectImages[8],
+          },
           {
             src: projectImages[18],
             comment: "Réunion de planification des activités",
-          },
-          {
-            src: projectImages[19],
-            comment: "Événement public de lancement du projet",
           },
           {
             src: projectImages[20],
             comment: "Travail de terrain avec les femmes leaders",
           },
           {
-            src: projectImages[21],
-            comment: "Célébration des premiers résultats obtenus",
-          },
-          {
             src: projectImages[22],
-            comment: "Partage d'expériences entre les participantes",
+            comment: "Journée de santé à la chefferie Ndoh Djuttista: le Chef traditionnel Jean Paul Melaga montre le bon exemple",
           },
           {
             src: projectImages[23],
-            comment: "Partage d'expériences entre les participantes",
+            comment: "Travaux de réflexion entre les reines (femmes leaders)",
           },
           {
             src: projectImages[24],
-            comment: "Partage d'expériences entre les participantes",
+            comment: "Séance de travail entre les chefs traditionnels leaders formateurs et les Reines femmes leaders",
           },
           {
             src: projectImages[25],
-            comment: "Partage d'expériences entre les participantes",
+            comment: "Séance de travail entre les chefs traditionnels leaders formateurs et les Reines femmes leaders",
           },
           {
             src: projectImages[26],
-            comment: "Partage d'expériences entre les participantes",
+            comment: "Atelier de formation des Reines femmes leaders par les chefs traditionnels leaders formateurs",
           },
 
           {
             src: projectImages[27],
-            comment: "Partage d'expériences entre les participantes",
+            comment: "Atelier de formation des Reines femmes leaders par les chefs traditionnels leaders formateurs. Honores par la présence de Helène Perrin stagiaire de Science Po de Lyon",
           },
           {
             src: projectImages[28],
-            comment: "Partage d'expériences entre les participantes",
+            comment: "Journée de santé animée par les reines femmes leaders",
           },
           {
-            src: projectImages[29],
-            comment: "Partage d'expériences entre les participantes",
+            src: projectImages[29]
           },
           {
             src: projectImages[30],
-            comment: "Partage d'expériences entre les participantes",
+            comment: "Quelques reines Femmes leaders.",
           },
         ],
       },
@@ -259,9 +278,43 @@ const projects = [
       "Ce projet soutenu par la Fondation de France, est d'une part, une innovation sociale qui enrôle les reines et les épouses des notables, jamais impliquées dans la vie publique de nos villages de l'Ouest Cameroun, dans la lutte contre les VBG, le VIH et SSR, et d'autre part, une poursuite des activités d'accompagnement au centre de la MEJ au profit de nos cibles surtout féminines. C'est une initiative communautaire de diversification des acteurs traditionnels dans la lutte contre le VIH et les VBG en milieu rural.",
     status: "En cours",
     impact: "Renforcement du leadership féminin traditionnel",
-    budget: "À définir",
     duration: "En continu",
   },
+  // {
+  //   id: 3,
+  //   title: "Activités au profit de la petite enfance",
+  //   category: "Aides Directes",
+  //   // Projet 3 - Petite Enfance
+  //   images: [
+  //     {
+  //       section: "Activités avec les enfants",
+  //       images: [
+  //         {
+  //           src: pe1,
+  //           comment: "Jeux et activités ludiques avec les enfants du centre",
+  //         },
+  //         {
+  //           src: pe2,
+  //           comment: "Moment de détente et de sozialisation des enfants",
+  //         },
+  //         {
+  //           src: pe3,
+  //           comment: "Animation lors de l'événements SOLIDAYS",
+  //         },
+  //       ],
+  //     },
+  //   ],
+  //   location: "Ouest Cameroun",
+  //   date: "Chaque année",
+  //   beneficiaries: "Enfants du centre MEJ et des communautés locales",
+  //   shortDescription:
+  //     "Programme d'activités éducatives et récréatives pour les enfants",
+  //   fullDescription:
+  //     "La MEJ organise régulièrement des activités au profit de la petite enfance : animations ludiques, sensibilisation, accompagnement psychosocial et soutien aux enfants vulnérables. Ces activités visent à promouvoir le développement global des enfants et à leur offrir un environnement sain et sécurisé.",
+  //   status: "En cours",
+  //   impact: "Épanouissement et développement des enfants",
+  //   duration: "En continu",
+  // },
 ];
 
 const categories = [
@@ -448,7 +501,7 @@ const ProjectImageCarousels = ({ project }) => {
       </div>
 
       {/* Badges superposés */}
-      <div className="absolute top-3 left-3 z-30">
+      <div className="absolute top-2 left-2 z-30">
         <span
           className={`px-2.5 py-1 rounded-full text-xs font-medium ${
             project.status === "En cours"
@@ -522,6 +575,7 @@ const ProjectImageCarousels = ({ project }) => {
 const ProjectsPage = () => {
   const [selectedCategory, setSelectedCategory] = useState("Tous");
   const [expandedProject, setExpandedProject] = useState(null);
+  const [selectedImage, setSelectedImage] = useState<{src: string; comment: string} | null>(null);
 
   const toggleProject = (projectId) => {
     setExpandedProject(expandedProject === projectId ? null : projectId);
@@ -642,7 +696,7 @@ const ProjectsPage = () => {
                     </div>
 
                     {/* Contenu principal */}
-                    <div className="flex-1 p-4 sm:p-5">
+                    <div className="flex-1 p-4 sm:p-5 pt-2 sm:pt-5">
                       <div className="flex items-start justify-between mb-2">
                         <h3 className="font-heading font-bold text-base sm:text-xl md:text-2xl text-foreground pr-4">
                           {project.title}
@@ -739,7 +793,7 @@ const ProjectsPage = () => {
                         {project.images.length > 0 && (
                           <div className="mt-6">
                             <h4 className="font-semibold text-sm sm:text-base text-foreground mb-3">
-                              Galerie du projet
+                              Galerie photos
                             </h4>
 
                             {project.images.map((section, sectionIndex) => (
@@ -755,7 +809,8 @@ const ProjectsPage = () => {
                                   {section.images.map((img, imgIndex) => (
                                     <div
                                       key={imgIndex}
-                                      className="relative aspect-square rounded-lg overflow-hidden cursor-pointer hover:opacity-90 transition-opacity group"
+                                      className="relative aspect-square rounded-lg overflow-hidden cursor-pointer group"
+                                      onClick={() => setSelectedImage({ src: img.src, comment: img.comment })}
                                     >
                                       <img
                                         src={img.src}
@@ -767,8 +822,8 @@ const ProjectsPage = () => {
                                       <div className="absolute top-2 left-2 bg-primary text-white text-xs px-1.5 py-0.5 rounded">
                                         {sectionIndex + 1}.{imgIndex + 1}
                                       </div>
-                                      {/* Commentaire au survol */}
-                                      <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-3 flex items-end">
+                                      {/* Commentaire toujours visible avec dégradé */}
+                                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-3 flex items-end">
                                         <div className="text-white text-xs">
                                           <div className="flex items-center gap-1 mb-1">
                                             <MessageSquare size={12} />
@@ -776,10 +831,14 @@ const ProjectsPage = () => {
                                               Commentaire :
                                             </span>
                                           </div>
-                                          <p>
-                                            {img.comment || "Image du projet"}
+                                          <p className="line-clamp-2">
+                                            {img.comment}
                                           </p>
                                         </div>
+                                      </div>
+                                      {/* Icone zoom */}
+                                      <div className="absolute top-2 right-2 bg-black/50 rounded-full p-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <ZoomIn size={14} className="text-white" />
                                       </div>
                                     </div>
                                   ))}
@@ -808,6 +867,31 @@ const ProjectsPage = () => {
           </div>
         </div>
       </section>
+
+      {/* Modal pour afficher l'image en grand */}
+      <Dialog open={!!selectedImage} onOpenChange={() => setSelectedImage(null)}>
+        <DialogContent className="max-w-4xl w-full p-0 bg-transparent border-none">
+          <DialogTitle className="sr-only">Image en grand</DialogTitle>
+          {selectedImage && (
+            <div className="relative">
+              <img
+                src={selectedImage.src}
+                alt="Image agrandie"
+                className="w-full h-auto max-h-[80vh] object-contain rounded-lg"
+              />
+              {selectedImage.comment && (
+                <div className="absolute bottom-0 left-0 right-0 bg-black/70 p-4 rounded-b-lg">
+                  <div className="flex items-center gap-2 text-white">
+                    <MessageSquare size={16} />
+                    <span className="font-medium">Commentaire :</span>
+                  </div>
+                  <p className="text-white/90 text-sm mt-1">{selectedImage.comment}</p>
+                </div>
+              )}
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
