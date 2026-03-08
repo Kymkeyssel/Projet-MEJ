@@ -102,7 +102,7 @@ const AboutPage = () => {
               <div className="space-y-3 sm:space-y-4">
                 <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
                   La MEJ (La Maison de Enfants et des Jeunes) est une
-                  association communautaire fondée sur les principes de
+                  Organisation à base Communautaire fondée sur les principes de
                   solidarité, humanité, engagement, Santé et Bien-être Global. Notre organisation
                   rassemble des membres de tous horizons, unis par une vision
                   commune : construire ensemble un avenir meilleur pour notre
@@ -110,7 +110,7 @@ const AboutPage = () => {
                 </p>
                 <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
                   Depuis notre création, nous avons œuvré sans relâche pour le
-                  bien-être de notre communauté, en mettant en place des projets
+                  bien-être de nos communautés villageoises, en mettant en place des projets
                   concrets qui répondent aux besoins réels des populations que
                   nous servons. Notre force réside dans l'engagement de nos
                   membres et la confiance de nos partenaires.
